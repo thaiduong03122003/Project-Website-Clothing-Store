@@ -25,14 +25,17 @@ const cartIcon = document.querySelector('#add-cart-icon'),
     cart = document.querySelector('.cart__menu'),
     cartClose = document.querySelector('#cart__close-btn');
 
-cartIcon.onclick = () => {
-    cart.classList.add('active');
-};
+if (cartIcon == null) {
+    console.log('Object no found!');
+} else {
+    cartIcon.onclick = () => {
+        cart.classList.add('active');
+    };
 
-cartClose.onclick = () => {
-    cart.classList.remove('active');
+    cartClose.onclick = () => {
+        cart.classList.remove('active');
+    };
 };
-
 /*=============== CART WORKING ===============*/
 if (document.readyState == 'loading') {
     document.addEventListener('DOMContentLoaded', ready);
@@ -204,7 +207,7 @@ var swiperProduct = new Swiper(".new__container", {
             spaceBetween: 24,
         },
         1024: {
-            slidesPerView: 6,
+            slidesPerView: 4,
             spaceBetween: 24,
         },
     },
