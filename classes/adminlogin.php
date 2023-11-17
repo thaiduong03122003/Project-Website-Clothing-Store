@@ -36,6 +36,7 @@
                     Session::set('adminlogin', true);
                     Session::set('adminId', $value['adId']);
                     Session::set('adminUser', $value['adUserName']);
+                    Session::set('adminSex', $value['adSex']);
                     $fullname = $value['adFirstname'].' '.$value['adLastname'];
                     Session::set('adminName', $fullname);
                     header('Location:index.php');

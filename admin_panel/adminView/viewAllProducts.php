@@ -84,6 +84,25 @@
                 ?>
               </select>
             </div>
+
+            <div class="form-group">
+              <label>Brand:</label>
+              <select id="category" >
+                <option disabled selected>Select Brandname</option>
+                <?php
+
+                  $sql="SELECT * from category";
+                  $result = $conn-> query($sql);
+
+                  if ($result-> num_rows > 0){
+                    while($row = $result-> fetch_assoc()){
+                      echo"<option value='".$row['category_id']."'>".$row['category_name'] ."</option>";
+                    }
+                  }
+                ?>
+              </select>
+            </div>
+
             <div class="form-group">
                 <label for="file">Choose Image:</label>
                 <input type="file" class="form-control-file" id="file">
