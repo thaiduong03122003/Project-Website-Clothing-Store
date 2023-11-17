@@ -25,21 +25,22 @@
             $adminPass = mysqli_real_escape_string($this->db->link, $adminPass);
 
             if(empty($adminUser) || empty($adminPass)) {
-                $alert = "User and Pass must be no empty!";
+                $alert = "Không được để trống Username hoặc Password!";
                 return $alert;
             } else {
-                $query = "SELECT * FROM tbl_admin WHERE adminUser = '$adminUser' AND adminPass = '$adminPass' LIMIT 1";
+                $query = "SELECT * FROM tbl_admin WHERE adUsername = '$adminUser' AND adPassword = '$adminPass' LIMIT 1";
                 $result = $this->db->select($query);
 
                 if($result != false) {
                     $value = $result->fetch_assoc();
                     Session::set('adminlogin', true);
-                    Session::set('adminId', $value['adminId']);
-                    Session::set('adminUser', $value['adminUser']);
-                    Session::set('adminName', $value['adminName']);
+                    Session::set('adminId', $value['adId']);
+                    Session::set('adminUser', $value['adUserName']);
+                    $fullname = $value['adFirstname'].' '.$value['adLastname'];
+                    Session::set('adminName', $fullname);
                     header('Location:index.php');
                 } else {
-                    $alert = "User and Pass not match";
+                    $alert = "Tên người dùng hoặc mật khẩu không đúng";
                     return $alert;
                 }
             }
