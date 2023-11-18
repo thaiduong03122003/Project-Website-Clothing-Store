@@ -1,6 +1,6 @@
 function openNav() {
     document.getElementById("mySidebar").style.transform = "translateX(0)";
-    document.getElementById("main-content").style.paddingLeft = "210px";
+    document.getElementById("main-content").style.paddingLeft = "190px";
     document.getElementById("main").style.display = "none";
 }
 

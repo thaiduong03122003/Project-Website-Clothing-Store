@@ -37,6 +37,7 @@
                     Session::set('adminId', $value['adId']);
                     Session::set('adminUser', $value['adUserName']);
                     Session::set('adminSex', $value['adSex']);
+                    Session::set('adminRole', $value['adRole']);
                     $fullname = $value['adFirstname'].' '.$value['adLastname'];
                     Session::set('adminName', $fullname);
                     header('Location:index.php');
@@ -45,9 +46,7 @@
                     return $alert;
                 }
             }
-        }
-
-        
+        }        
     
         
     }

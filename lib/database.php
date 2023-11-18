@@ -1,6 +1,6 @@
 <?php
-  // $filepath = realpath(dirname(__FILE__));
-  include ('../admin_panel/config/config.php');
+  $filepath = realpath(dirname(__FILE__));
+  include ($filepath.'/../admin_panel/config/config.php');
 ?>
 
 <?php

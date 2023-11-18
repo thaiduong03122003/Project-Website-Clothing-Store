@@ -1,35 +1,44 @@
-<div >
+<div class="container_right_side">
   <h2>All Customers</h2>
   <table class="table ">
     <thead>
       <tr>
-        <th class="text-center">S.N.</th>
-        <th class="text-center">Username </th>
+        <th title="Serial number" class="text-center">S.N.</th>
+        <th title="Tên" class="text-center">Fisrt Name</th>
+        <th title="Họ" class="text-center">Last Name</th>
+        <th title="Giới tính" class="text-center">Sex</th>
         <th class="text-center">Email</th>
-        <th class="text-center">Contact Number</th>
-        <th class="text-center">Joining Date</th>
+        <th title="SĐT liên hệ" class="text-center">Phone</th>
+        <th title="Địa chỉ" class="text-center">Address</th>
+
       </tr>
     </thead>
     <?php
-      include_once "../config/dbconnect.php";
-      $sql="SELECT * from users where isAdmin=0";
-      $result=$conn-> query($sql);
-      $count=1;
-      if ($result-> num_rows > 0){
-        while ($row=$result-> fetch_assoc()) {
-           
+      include '../../classes/cls_customer.php';
+
+      $cs = new customer();
+
+      $cuslist = $cs->show_customer();
+      if($cuslist) {
+        $countcus = 0;
+        while ($result_cus_list = $cuslist->fetch_assoc()) {
+            $countcus++; 
     ?>
     <tr>
-      <td><?=$count?></td>
-      <td><?=$row["first_name"]?> <?=$row["last_name"]?></td>
-      <td><?=$row["email"]?></td>
-      <td><?=$row["contact_no"]?></td>
-      <td><?=$row["registered_at"]?></td>
+      <td><?=$countcus?></td>
+      <td><?=$result_cus_list['cusFirstname']?></td>
+      <td><?=$result_cus_list['cusLastname']?></td>
+      <td><?=$result_cus_list['cusSex']?></td>
+      <td><?=$result_cus_list['cusEmail']?></td>
+      <td><?=$result_cus_list['cusPhone']?></td>
+      <td><?=$result_cus_list['cusAddress']?></td>
     </tr>
+
     <?php
-            $count=$count+1;
-           
         }
-    }
+      }
     ?>
+
   </table>
+  
+</div>

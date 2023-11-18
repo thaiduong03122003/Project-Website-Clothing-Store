@@ -1,3 +1,25 @@
+function showStaff() {
+    $.ajax({
+        url: "./adminView/viewStaff.php",
+        method: "post",
+        data: { record: 1 },
+        success: function(data) {
+            $('.allContent-section').html(data);
+        }
+    });
+}
+
+function showBrands() {
+    $.ajax({
+        url: "./adminView/viewBrands.php",
+        method: "post",
+        data: { record: 1 },
+        success: function(data) {
+            $('.allContent-section').html(data);
+        }
+    });
+}
+
 function showProductItems() {
     $.ajax({
         url: "./adminView/viewAllProducts.php",
@@ -53,6 +75,7 @@ function showCustomers() {
     });
 }
 
+
 function showOrders() {
     $.ajax({
         url: "./adminView/viewAllOrders.php",
@@ -88,6 +111,85 @@ function ChangePay(id) {
             showOrders();
         }
     });
+}
+
+function addStaff(event) {
+    event.preventDefault();
+    var ad_username = $('#ad_username').val().trim();
+    var ad_password = $('#ad_password').val().trim();
+    if (ad_username == '' || ad_password == '') {
+        toast('Không được bỏ trống username hoặc password!', 'error');
+        return false;
+    } else {
+        var ad_FN = $('#ad_FN').val();
+        var ad_LN = $('#ad_LN').val();
+        var ad_sex = $("input[name='sex']:checked").val();
+        var ad_email = $('#ad_email').val();
+        var ad_phone = $('#ad_phone').val();
+        var ad_role = $("input[name='role']:checked").val();
+
+        var fd = new FormData();
+        fd.append('ad_username', ad_username);
+        fd.append('ad_password', ad_password);
+        fd.append('ad_FN', ad_FN);
+        fd.append('ad_LN', ad_LN);
+        fd.append('ad_sex', ad_sex);
+        fd.append('ad_email', ad_email);
+        fd.append('ad_phone', ad_phone);
+        fd.append('ad_role', ad_role);
+
+        $.ajax({
+            url: "./controller/addStaffController.php",
+            method: "post",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if (data.trim() == 'unsuccessful') {
+                    toast('Username này đã có người đăng ký!', 'error');
+                    $('.modal.fade').removeClass('show');
+                    $('.modal.fade').css('display', 'none');
+                    $('.modal-backdrop').remove();
+                } else {
+                    toast('Thêm username: ' + data + ' thành công!');
+                    $('form').trigger('reset');
+                    showStaff();
+                    $('.modal.fade').removeClass('show');
+                    $('.modal-backdrop').remove();
+                }
+            }
+        });
+    }
+
+}
+
+function addBrand(event) {
+    event.preventDefault();
+    var br_name = $('#br_name').val().trim();
+    if (br_name == '') {
+        toast('Bạn phải nhập Tên thương hiệu!', 'error');
+        return false;
+    } else {
+        $.ajax({
+            url: "./controller/addBrandController.php",
+            method: "post",
+            data: { record: br_name },
+            success: function(data) {
+                if (data.trim() != 'unsuccessful'.trim()) {
+                    toast('Thêm thương hiệu ' + data + ' thành công!');
+                    $('form').trigger('reset');
+                    showBrands();
+                    $('.modal.fade').removeClass('show');
+                    $('.modal-backdrop').remove();
+                } else {
+                    toast('Thương hiệu đã tồn tại!', 'error');
+                    $('.modal.fade').removeClass('show');
+                    $('.modal.fade').css('display', 'none');
+                    $('.modal-backdrop').remove();
+                }
+            }
+        });
+    }
 }
 
 
@@ -165,6 +267,41 @@ function updateItems() {
     });
 }
 
+function staffDelete(id, firstname, lastname) {
+    Swal.fire(confirmObj('Cảnh báo!', 'Bạn có muốn xóa: ' + firstname + ' ' + lastname + '?', 'error', 'Xóa', 'Hủy')).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "./controller/deleteStaffController.php",
+                method: "post",
+                data: { record: id },
+                success: function(data) {
+                    toast('Xóa ' + firstname + ' ' + lastname + ' thành công!');
+                    $('form').trigger('reset');
+                    showStaff();
+                }
+            });
+        }
+    });
+}
+
+function brandDelete(id, name) {
+    Swal.fire(confirmObj('Cảnh báo!', 'Khi bạn xóa thương hiệu ' + name + ', mọi sản phẩm mang thương hiệu này sẽ mang Mã thương hiệu là NULL.', 'error', 'Xóa', 'Hủy')).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "./controller/deleteBrandController.php",
+                method: "post",
+                data: { record: id },
+                success: function(data) {
+                    toast('Xóa thương hiệu ' + name + ' thành công!');
+                    $('form').trigger('reset');
+                    showBrands();
+                }
+            });
+        }
+    });
+}
+
+
 //delete product data
 function itemDelete(id) {
     $.ajax({
@@ -222,15 +359,19 @@ function categoryDelete(id) {
 }
 
 //delete size data
-function sizeDelete(id) {
-    $.ajax({
-        url: "./controller/deleteSizeController.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            alert('Size Successfully deleted');
-            $('form').trigger('reset');
-            showSizes();
+function sizeDelete(id, name) {
+    Swal.fire(confirmObj('Cảnh báo!', 'Bạn có muốn xóa Size: ' + name + '?', 'error', 'Xóa', 'Hủy')).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "./controller/deleteSizeController.php",
+                method: "post",
+                data: { record: id },
+                success: function(data) {
+                    toast('Xóa Size ' + name + ' thành công!');
+                    $('form').trigger('reset');
+                    showSizes();
+                }
+            });
         }
     });
 }
@@ -381,6 +522,7 @@ logoutBtn.addEventListener('click', function() {
     });
 });
 
+// Hiển thị hộp thoại thông báo
 function confirmObj(title, text, icon, confirmText, cancelText) {
     return {
         title: title,
@@ -392,4 +534,28 @@ function confirmObj(title, text, icon, confirmText, cancelText) {
         confirmButtonText: confirmText,
         cancelButtonText: cancelText
     };
+}
+
+//Hiển thị thông báo bên góc trên phải
+function showToast(type, message) {
+    toastMixin.fire({
+        icon: type,
+        title: ' ' + message
+    });
+}
+
+function toast(message, icon = 'success', timer = '2000', position = 'top-end') {
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: position,
+        showConfirmButton: false,
+        timer: timer,
+        timerProgressBar: true,
+    })
+
+    Toast.fire({
+        icon: icon,
+        title: message
+    });
 }

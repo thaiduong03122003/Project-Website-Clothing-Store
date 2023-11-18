@@ -111,6 +111,19 @@
 }
 
 
+/* Style for right_sidebar */
+
+.container_right_side {
+    position: relative;
+}
+
+.container_right_side .btn_add_right_side {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+
 /* The button used to open the sidebar */
 
 .openbtn {
