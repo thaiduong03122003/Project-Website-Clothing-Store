@@ -1,6 +1,5 @@
-
-<div >
-  <h3>Available Sizes</h3>
+<div class="container_right_side">
+  <h3>Sizes List</h3>
   <table class="table ">
     <thead>
       <tr>
@@ -10,50 +9,53 @@
       </tr>
     </thead>
     <?php
-      include_once "../config/dbconnect.php";
-      $sql="SELECT * from sizes";
-      $result=$conn-> query($sql);
-      $count=1;
-      if ($result-> num_rows > 0){
-        while ($row=$result-> fetch_assoc()) {
-    ?>
-    <tr>
-      <td><?=$count?></td>
-      <td><?=$row["size_name"]?></td>   
-      <!-- <td><button class="btn btn-primary" >Edit</button></td> -->
-      <td><button class="btn btn-danger" style="height:40px" onclick="sizeDelete('<?=$row['size_id']?>', '<?=$row['size_name']?>')">Delete</button></td>
+      include '../../classes/cls_size.php';
 
+      $size = new size();
+
+      $sizelist = $size->show_sizes();
+      if($sizelist) {
+        $countsz = 0;
+        while ($result_size_list = $sizelist->fetch_assoc()) {
+            $countsz++; 
+    ?>
+    
+    <tr>
+      <td><?=$countsz?></td>
+      <td><?=$result_size_list['sizeName']?></td>
+      <td><button class="btn btn-primary" style="height:40px" onclick="sizeEditForm('<?=$result_size_list['sizeId']?>')">Edit</button></td>
+      <td><button class="btn btn-danger" style="height:40px" onclick="sizeDelete('<?=$result_size_list['sizeId']?>','<?=$result_size_list['sizeName']?>')">Delete</button></td>
       </tr>
+
       <?php
-            $count=$count+1;
-          }
         }
-      ?>
+      }
+    ?>
   </table>
 
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-secondary" style="height:40px" data-toggle="modal" data-target="#myModal">
+  <button type="button" class="btn btn-secondary btn_add_right_side" style="height:40px" data-toggle="modal" data-target="#myModal">
     Add Size
   </button>
 
-  <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">New Size Record</h4>
+          <h4 class="modal-title">New Size</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form  enctype='multipart/form-data' action="./controller/addSizeController.php" method="POST">
+          <form  enctype='multipart/form-data'  method="POST">
             <div class="form-group">
-              <label for="size">Size Number:</label>
-              <input type="text" class="form-control" name="size" required>
+              <label for="sizename">Size Name:</label>
+              <input type="text" class="form-control" id="sizename">
             </div>
+
             <div class="form-group">
-              <button type="submit" class="btn btn-secondary" name="upload" style="height:40px">Add Size</button>
+              <button type="button" onclick="addSize(event)" class="btn btn-secondary" id="upload" style="height:40px">Save</button>
             </div>
           </form>
 

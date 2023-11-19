@@ -5,7 +5,7 @@
 ?>
 
 <?php
-    class staff 
+    class size 
     {
         private $db;
         private $fm;
@@ -16,20 +16,20 @@
             $this->fm = new Format();
         }
 
-        public function show_staff() {
-            $query ="SELECT * FROM tbl_admin ORDER BY adId";
+        public function show_sizes() {
+            $query ="SELECT * FROM tbl_size ORDER BY sizeId";
             $result = $this->db->select($query);
             return $result;
         }
 
-        public function show_staff_by_id ($id) {
-            $query ="SELECT * FROM tbl_admin WHERE adId = '$id'";
+        public function show_size_by_id ($id) {
+            $query ="SELECT * FROM tbl_size WHERE sizeId = '$id'";
             $result = $this->db->select($query);
             return $result;
         }
-       
-        public function del_staff($id) {
-            $query = "DELETE FROM tbl_admin WHERE adId = '$id'";
+
+        public function del_size($id) {
+            $query = "DELETE FROM tbl_size WHERE sizeId = '$id'";
             $result = $this->db->delete($query);
             if($result) {
                     return true;
@@ -37,9 +37,7 @@
                     return false;
             }
         }
+       
         
-        public function update_staff() {
-            
-        }
     }
 ?>

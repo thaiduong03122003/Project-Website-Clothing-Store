@@ -22,6 +22,12 @@
             return $result;
         }
 
+        public function show_brand_by_id ($id) {
+            $query ="SELECT * FROM tbl_brand WHERE brandId = '$id'";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
         public function del_brand($id) {
             $query = "DELETE FROM tbl_brand WHERE brandId = '$id'";
             $result = $this->db->delete($query);

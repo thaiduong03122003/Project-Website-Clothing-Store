@@ -37,13 +37,13 @@ var isPlaying = false;
 
 btnSong.onclick = () => {
     if (!isPlaying) {
-        btnSong.classList.remove('fi-rr-volume-mute');
-        btnSong.classList.add('fi-rr-volume');
+        btnSong.classList.remove('fi-rr-music-note-slash');
+        btnSong.classList.add('fi-rr-music-note');
         song.play();
         isPlaying = true;
     } else {
-        btnSong.classList.remove('fi-rr-volume');
-        btnSong.classList.add('fi-rr-volume-mute');
+        btnSong.classList.remove('fi-rr-music-note');
+        btnSong.classList.add('fi-rr-music-note-slash');
         song.pause();
         isPlaying = false;
     }

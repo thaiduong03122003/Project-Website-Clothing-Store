@@ -44,7 +44,7 @@
         }
       ?>
 
-      <td><button class="btn btn-primary" style="height:40px" onclick="variationEditForm('<?=$result_staff_list['adId']?>')">Edit</button></td>
+      <td><button class="btn btn-primary" style="height:40px" onclick="staffEditForm('<?=$result_staff_list['adId']?>')">Edit</button></td>
       <td><button class="btn btn-danger" style="height:40px" onclick="staffDelete('<?=$result_staff_list['adId']?>','<?=$result_staff_list['adFirstname']?>', '<?=$result_staff_list['adLastname']?>')">Delete</button></td>
     </tr>
     <?php
@@ -128,13 +128,13 @@
               <div class="row ml-5">
                 <div class="col-auto">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input form-check-lg" type="radio" name="role" value="Staff" checked>
+                        <input class="form-check-input form-check-lg" type="radio" name="role" value="1" checked>
                         <label class="form-check-label" for="female">Staff</label>
                     </div>
                 </div>
                 <div class="col-auto">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input form-check-lg" type="radio" name="role" value="Admin">
+                        <input class="form-check-input form-check-lg" type="radio" name="role" value="0">
                         <label class="form-check-label" for="male">Admin</label>
                     </div>
                 </div>

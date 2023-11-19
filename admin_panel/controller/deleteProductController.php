@@ -1,13 +1,13 @@
 <?php
-    include_once "../../classes/cls_size.php";
-    $size = new size();
+    include_once "../../classes/cls_product.php";
+    $pd = new product();
     
     if(isset($_POST['record'])) {
         $id=$_POST['record'];
-        $delsize = $st->del_size($id);
-
-        if($delsize){
-            echo"Size Deleted";
+        $delpd = $pd->del_product($id);
+        
+        if($delpd){
+            echo"Product Deleted";
         } else {
             echo"Not able to delete";
         }

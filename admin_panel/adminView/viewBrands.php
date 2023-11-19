@@ -23,7 +23,7 @@
     <tr>
       <td><?=$countbr?></td>
       <td><?=$result_br_list['brandName']?></td>
-      <td><button class="btn btn-primary" style="height:40px" onclick="variationEditForm('<?=$result_br_list['brandId']?>')">Edit</button></td>
+      <td><button class="btn btn-primary" style="height:40px" onclick="brandEditForm('<?=$result_br_list['brandId']?>')">Edit</button></td>
       <td><button class="btn btn-danger" style="height:40px" onclick="brandDelete('<?=$result_br_list['brandId']?>','<?=$result_br_list['brandName']?>')">Delete</button></td>
       </tr>
 

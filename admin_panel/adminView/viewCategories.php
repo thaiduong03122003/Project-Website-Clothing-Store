@@ -1,6 +1,5 @@
-
-<div >
-  <h3>Category Items</h3>
+<div class="container_right_side">
+  <h3>Categories List</h3>
   <table class="table ">
     <thead>
       <tr>
@@ -10,49 +9,53 @@
       </tr>
     </thead>
     <?php
-      include_once "../config/dbconnect.php";
-      $sql="SELECT * from category";
-      $result=$conn-> query($sql);
-      $count=1;
-      if ($result-> num_rows > 0){
-        while ($row=$result-> fetch_assoc()) {
+      include '../../classes/cls_category.php';
+
+      $cat = new category();
+
+      $catlist = $cat->show_categories();
+      if($catlist) {
+        $countcat = 0;
+        while ($result_cat_list = $catlist->fetch_assoc()) {
+            $countcat++; 
     ?>
+    
     <tr>
-      <td><?=$count?></td>
-      <td><?=$row["category_name"]?></td>   
-      <!-- <td><button class="btn btn-primary" >Edit</button></td> -->
-      <td><button class="btn btn-danger" style="height:40px" onclick="categoryDelete('<?=$row['category_id']?>')">Delete</button></td>
+      <td><?=$countcat?></td>
+      <td><?=$result_cat_list['catName']?></td>
+      <td><button class="btn btn-primary" style="height:40px" onclick="categoryEditForm('<?=$result_cat_list['catId']?>')">Edit</button></td>
+      <td><button class="btn btn-danger" style="height:40px" onclick="categoryDelete('<?=$result_cat_list['catId']?>','<?=$result_cat_list['catName']?>')">Delete</button></td>
       </tr>
+
       <?php
-            $count=$count+1;
-          }
         }
-      ?>
+      }
+    ?>
   </table>
 
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-secondary" style="height:40px" data-toggle="modal" data-target="#myModal">
+  <button type="button" class="btn btn-secondary btn_add_right_side" style="height:40px" data-toggle="modal" data-target="#myModal">
     Add Category
   </button>
 
-  <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">New Category Item</h4>
+          <h4 class="modal-title">New Category</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form  enctype='multipart/form-data' action="./controller/addCatController.php" method="POST">
+          <form  enctype='multipart/form-data'  method="POST">
             <div class="form-group">
-              <label for="c_name">Category Name:</label>
-              <input type="text" class="form-control" name="c_name" required>
+              <label for="catname">Category Name:</label>
+              <input type="text" class="form-control" id="catname">
             </div>
+
             <div class="form-group">
-              <button type="submit" class="btn btn-secondary" name="upload" style="height:40px">Add Category</button>
+              <button type="button" onclick="addCategory(event)" class="btn btn-secondary" id="upload" style="height:40px">Save</button>
             </div>
           </form>
 

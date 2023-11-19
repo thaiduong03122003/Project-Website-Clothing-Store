@@ -12,8 +12,7 @@
     ?>
 
     <h5 style="margin-top:10px; margin-bottom: 10px;">
-        Welcome 
-        <span style="font-size: 18px; color: #fff">
+        <span style="font-size: 20px; color: #fff">
             <?php
                 if (Session::get('adminRole') == '0') {
                     echo '[Admin]';
@@ -31,7 +30,7 @@
 </div>
     <div class="sidebar_menu">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa fa-times"></i></a>
-        <a href="./index.php" class="menu_btn"><i class="fa fa-bar-chart"></i> Dashboard</a>
+        <a href="#dashboard" onclick="showDashboard()" class="menu_btn"><i class="fa fa-bar-chart"></i> Dashboard</a>
 
         <?php
             if(Session::get('adminRole') == '0') {
@@ -43,10 +42,10 @@
 
         <a href="#customers" onclick="showCustomers()" class="menu_btn"><i class="fa fa-users"></i> Customers</a>
         <a href="#brands" onclick="showBrands()" class="menu_btn"><i class="fa fa-tags"></i> Brands</a>
-        <a href="#category" onclick="showCategory()" class="menu_btn"><i class="fa fa-th-large"></i> Categories</a>
+        <a href="#category" onclick="showCategories()" class="menu_btn"><i class="fa fa-th-large"></i> Categories</a>
         <a href="#sizes" onclick="showSizes()" class="menu_btn"><i class="fa fa-tasks"></i> Sizes</a>
         <a href="#productsizes" onclick="showProductSizes()" class="menu_btn"><i class="fa fa-th-list"></i> Product Sizes</a>    
-        <a href="#products" onclick="showProductItems()" class="menu_btn"><i class="fa fa-th"></i> Products</a>
+        <a href="#products" onclick="showProducts()" class="menu_btn"><i class="fa fa-th"></i> Products</a>
         <a href="#orders" onclick="showOrders()" class="menu_btn"><i class="fa fa-shopping-bag"></i> Orders</a>
     </div>
   <!---->

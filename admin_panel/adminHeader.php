@@ -23,13 +23,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- flaticon -->
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <!-- drivejs -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css"/>
   </head>
 </head>
 <body >
  <!-- nav -->
  <nav class="navbar navbar-expand-lg navbar-light px-5" style="background-color: #3175ee;">
-    <div>
-      <i id="btn_song" class="fi fi-rr-volume-mute" style="font-size: 24px; color: #fff; cursor: pointer;"></i>
+    <div id="highlight-me">
+      <i id="btn_song" class="fi fi-rr-music-note-slash" style="font-size: 26px; color: #fff; cursor: pointer;"></i>
     </div>
     <audio src="../audio/golden_hour_song.mp3" controls loop style="display:none;" id="song"></audio>
     <a class="navbar-brand ml-5" href="./index.php">

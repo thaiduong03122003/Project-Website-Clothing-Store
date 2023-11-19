@@ -1,11 +1,5 @@
-<?php
-    include_once "./adminHeader.php";
-    include "./sidebar.php";
-    include "./config/dbconnect.php";
-?>
-    <div id="main-content" class="container allContent-section py-4">
-        <div class="row">
-
+<div class="row">
+<?php include_once "./../config/dbconnect.php";?>
             <div class="col-sm-3">
                 <div class="card dashboard_content">
                     <img src="./assets/images/moderator.png" class="dashboard_img" alt="">
@@ -131,57 +125,3 @@
                 </div>
             </div>
         </div>
-        
-    </div>
-       
-    
-        <?php
-            if (isset($_GET['category']) && $_GET['category'] == "success") {
-                echo '<script> alert("Category Successfully Added")</script>';
-            }else if (isset($_GET['category']) && $_GET['category'] == "error") {
-                echo '<script> alert("Adding Unsuccess")</script>';
-            }
-            if (isset($_GET['size']) && $_GET['size'] == "success") {
-                echo '<script> alert("Size Successfully Added")</script>';
-            }else if (isset($_GET['size']) && $_GET['size'] == "error") {
-                echo '<script> alert("Adding Unsuccess")</script>';
-            }
-            if (isset($_GET['variation']) && $_GET['variation'] == "success") {
-                echo '<script> alert("Variation Successfully Added")</script>';
-            }else if (isset($_GET['variation']) && $_GET['variation'] == "error") {
-                echo '<script> alert("Adding Unsuccess")</script>';
-            }
-        ?>
-
-    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" ></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
-
-    <!-- ====== Alert Dialog ======= -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
-    <!-- ====== Drivejs: Focus on Volume icon ======= -->       
-    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>   
-    
-    <script type="text/javascript" src="./assets/js/ajaxWork.js"></script>    
-    <script type="text/javascript" src="./assets/js/script.js"></script>
-
-    <script>
-        const driver = window.driver.js.driver;
-
-        const driverObj = driver({
-            stagePadding: 4,
-        });
-
-        driverObj.highlight({
-            element: "#highlight-me",
-            popover: {
-                side: "bottom",
-                title: "Chào mừng <?=Session::get('adminName')?> đến với bảng quản trị",
-                description: "Trong lúc làm việc, hãy bật chút nhạc để giảm căng thẳng nhé!"
-            }
-        });
-    </script>
-
-</body>
- 
-</html>
