@@ -37,6 +37,11 @@
     </div>
 
     <div class="form-group">
+        <label for="lastname">Password (if necessary):</label>
+        <input type="text" class="form-control" id="password">
+    </div>
+
+    <div class="form-group">
         <label for="lname">Sex:</label>
         <div class="row ml-5">
             <div class="col-auto">

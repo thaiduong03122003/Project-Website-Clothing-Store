@@ -13,21 +13,44 @@
         $phone = $_POST['phone'];
         $role = $_POST['role'];
 
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $date = date("Y-m-d H:i:s");
+        
         $check_username = "SELECT * FROM tbl_admin WHERE adUsername = '$username' AND adId != '$id' LIMIT 1";
         $result_check = $db->select($check_username);
         if ($result_check) {
             echo 'unsuccessful';
+            exit;
         } else {
 
-            $query = "UPDATE tbl_admin SET 
-                adUsername = '$username', 
-                adFirstname = '$firstname',  
-                adLastname = '$lastname',  
-                adSex = '$sex', 
-                adEmail = '$email', 
-                adPhone = '$phone', 
-                adRole = '$role'
-                WHERE adId = '$id'";
+            if (!empty($_POST['password'])) {
+                $password = md5($_POST['password']);
+
+                $query = "UPDATE tbl_admin SET 
+                    adUsername = '$username', 
+                    adPassword = '$password', 
+                    adFirstname = '$firstname',  
+                    adLastname = '$lastname',
+                    adSex = '$sex', 
+                    adEmail = '$email', 
+                    adPhone = '$phone', 
+                    dateCreate = '$date',
+                    adRole = '$role'
+                    WHERE adId = '$id'";
+
+            } else {
+                $query = "UPDATE tbl_admin SET 
+                    adUsername = '$username', 
+                    adFirstname = '$firstname',  
+                    adLastname = '$lastname',  
+                    adSex = '$sex', 
+                    adEmail = '$email', 
+                    adPhone = '$phone', 
+                    dateCreate = '$date',
+                    adRole = '$role'
+                    WHERE adId = '$id'";
+            }
+            
             $result_update = $db->update($query);
         
             if(!$result_update) {

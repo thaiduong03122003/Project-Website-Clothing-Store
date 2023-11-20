@@ -38,8 +38,5 @@
             }
         }
         
-        public function update_staff() {
-            
-        }
     }
 ?>

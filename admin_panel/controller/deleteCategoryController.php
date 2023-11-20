@@ -4,7 +4,7 @@
     
     if(isset($_POST['record'])) {
         $id=$_POST['record'];
-        $delcat = $st->del_category($id);
+        $delcat = $cat->del_category($id);
 
         if($delcat){
             echo"Category Deleted";

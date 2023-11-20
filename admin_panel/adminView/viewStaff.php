@@ -10,6 +10,7 @@
         <th title="Giới tính" class="text-center">Sex</th>
         <th class="text-center">Email</th>
         <th title="SĐT liên hệ" class="text-center">Phone</th>
+        <th title="Thời gian tạo" class="text-center">Date</th>
         <th title="Chức vụ" class="text-center">Role</th>
         <th class="text-center" colspan="2">Action</th>
 
@@ -34,6 +35,7 @@
       <td><?=$result_staff_list['adSex']?></td>
       <td><?=$result_staff_list['adEmail']?></td>
       <td><?=$result_staff_list['adPhone']?></td>
+      <td><?=$result_staff_list['dateCreate']?></td>
       
 
       <?php 
@@ -142,7 +144,7 @@
             </div>
 
             <div class="form-group">
-              <button type="button" onclick="addStaff(event)" class="btn btn-secondary" id="upload" style="height:40px">Save</button>
+              <button onclick="addStaff(event)" class="btn btn-secondary" id="upload" style="height:40px">Save</button>
             </div>
           </form>
 

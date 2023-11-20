@@ -66,10 +66,22 @@
 
               </select>
             </div>
+
+            <div class="form-group">
+                <label for="date">Date Import Product:</label>
+                <input type="date" class="form-control" id="date">
+            </div>
             
             <div class="form-group">
                 <label for="file">Choose Image:</label>
                 <input type="file" class="form-control-file" id="file">
+            </div>
+
+            <br>
+            
+            <div class="form-group">
+                <label for="files">Choose Description Image (choose at least 1 image file):</label>
+                <input type="file" class="form-control-file" id="files" multiple="multiple">
             </div>
 
             <div class="form-group">

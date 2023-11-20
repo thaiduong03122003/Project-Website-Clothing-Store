@@ -1,3 +1,14 @@
+function goToSection(filename) {
+    $.ajax({
+        url: "./adminView/" + filename,
+        method: "post",
+        data: { record: 1 },
+        success: function(data) {
+            $('.allContent-section').html(data);
+        }
+    });
+}
+
 function showDashboard() {
     $.ajax({
         url: "./adminView/viewDashboard.php",
@@ -98,6 +109,34 @@ function showOrders() {
     });
 }
 
+function showCoupons() {
+    $.ajax({
+        url: "./adminView/viewCoupons.php",
+        method: "post",
+        data: { record: 1 },
+        success: function(data) {
+            $('.allContent-section').html(data);
+        }
+    });
+}
+
+function changeAccStatus(id, firstname, lastname) {
+    Swal.fire(confirmObj('Cảnh báo!', 'Bạn có muốn thay đổi trạng thái của tài khoản của ' + firstname + ' ' + lastname + '?', 'error', 'Đồng ý', 'Hủy')).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "./controller/updateAccStatus.php",
+                method: "post",
+                data: { record: id },
+                success: function(data) {
+                    toast('Thay đổi trang thái tài khoản của ' + firstname + ' ' + lastname + ' thành công!', 'success', '4000');
+                    $('form').trigger('reset');
+                    goToSection('viewCustomers.php');
+                }
+            });
+        }
+    });
+}
+
 function ChangeOrderStatus(id) {
     $.ajax({
         url: "./controller/updateOrderStatus.php",
@@ -164,9 +203,10 @@ function addStaff(event) {
                 } else {
                     toast('Thêm username: ' + data + ' thành công!');
                     $('form').trigger('reset');
-                    showStaff();
-                    $('.modal.fade').removeClass('show');
-                    $('.modal-backdrop').remove();
+                    $('#myModal').modal('hide');
+                    $('#myModal').on('hidden.bs.modal', function() {
+                        showStaff();
+                    });
                 }
             }
         });
@@ -189,14 +229,12 @@ function addBrand(event) {
                 if (data.trim() != 'unsuccessful'.trim()) {
                     toast('Thêm thương hiệu ' + data + ' thành công!');
                     $('form').trigger('reset');
-                    showBrands();
-                    $('.modal.fade').removeClass('show');
-                    $('.modal-backdrop').remove();
+                    $('#myModal').modal('hide');
+                    $('#myModal').on('hidden.bs.modal', function() {
+                        showBrands();
+                    });
                 } else {
                     toast('Thương hiệu đã tồn tại!', 'error');
-                    $('.modal.fade').removeClass('show');
-                    $('.modal.fade').css('display', 'none');
-                    $('.modal-backdrop').remove();
                 }
             }
         });
@@ -206,26 +244,32 @@ function addBrand(event) {
 function addCategory(event) {
     event.preventDefault();
     var catname = $('#catname').val().trim();
-    if (catname == '') {
-        toast('Bạn phải nhập Tên danh mục!', 'error');
+    var file = $('#file')[0].files[0];
+    if (catname == '' || file == undefined) {
+        toast('Vui lòng nhập đầy đủ các trường!', 'error');
         return false;
     } else {
+        var fd = new FormData();
+        fd.append('record', catname);
+        fd.append('file', file);
         $.ajax({
             url: "./controller/addCategoryController.php",
             method: "post",
-            data: { record: catname },
+            data: fd,
+            contentType: false,
+            processData: false,
             success: function(data) {
-                if (data.trim() != 'unsuccessful'.trim()) {
-                    toast('Thêm danh mục ' + data + ' thành công!');
-                    $('form').trigger('reset');
-                    showCategories();
-                    $('.modal.fade').removeClass('show');
-                    $('.modal-backdrop').remove();
+                if (data.trim() == 'unsuccessful'.trim()) {
+                    toast('Danh mục: ' + catname + ' đã có rồi!', 'error');
+                } else if (data.trim() == 'notsuitable'.trim()) {
+                    toast('Hãy chọn ảnh có kích thước dưới 2MB và chỉ bao gồm các đuôi mở rộng: .jpg / .jpeg / .png / .gif', 'error', '8000');
                 } else {
-                    toast('Danh mục đã tồn tại!', 'error');
-                    $('.modal.fade').removeClass('show');
-                    $('.modal.fade').css('display', 'none');
-                    $('.modal-backdrop').remove();
+                    toast('Thêm sản phẩm: ' + data + ' thành công!');
+                    $('form').trigger('reset');
+                    $('#myModal').modal('hide');
+                    $('#myModal').on('hidden.bs.modal', function() {
+                        showCategories();
+                    });
                 }
             }
         });
@@ -247,14 +291,12 @@ function addSize(event) {
                 if (data.trim() != 'unsuccessful'.trim()) {
                     toast('Thêm Size ' + data + ' thành công!');
                     $('form').trigger('reset');
-                    showSizes();
-                    $('.modal.fade').removeClass('show');
-                    $('.modal-backdrop').remove();
+                    $('#myModal').modal('hide');
+                    $('#myModal').on('hidden.bs.modal', function() {
+                        showSizes();
+                    });
                 } else {
                     toast('Danh mục đã tồn tại!', 'error');
-                    $('.modal.fade').removeClass('show');
-                    $('.modal.fade').css('display', 'none');
-                    $('.modal-backdrop').remove();
                 }
             }
         });
@@ -279,9 +321,11 @@ function addProduct(event) {
     var pddesc = $('#pddesc').val();
     var category = $('#category').val();
     var brand = $('#brand').val();
+    var date = $('#date').val();
     var file = $('#file')[0].files[0];
+    var files = $('#files')[0].files;
     var upload = $('#upload').val();
-    if (pdname == '' || pdprice == '' || category == 'Select category' || brand == 'Select brand' || file === undefined) {
+    if (pdname == '' || pdprice == '' || category == null || brand == null || file === undefined || files.length === 0) {
         toast('Không được bỏ trống!', 'error');
         return false;
     } else {
@@ -291,7 +335,13 @@ function addProduct(event) {
         fd.append('pddesc', pddesc);
         fd.append('category', category);
         fd.append('brand', brand);
+        fd.append('date', date);
         fd.append('file', file);
+
+        for (var i = 0; i < files.length; i++) {
+            fd.append('files[]', files[i]);
+        }
+
         fd.append('upload', upload);
 
         $.ajax({
@@ -303,91 +353,95 @@ function addProduct(event) {
             success: function(data) {
                 if (data.trim() == 'unsuccessful'.trim()) {
                     toast('Sản phẩn thuộc thương hiệu và danh mục này đã có rồi!', 'error');
-                    showProducts();
+                } else if (data.trim() == 'notsuitable'.trim()) {
+                    toast('Hãy chọn ảnh có kích thước dưới 2MB và chỉ bao gồm các đuôi mở rộng: .jpg / .jpeg / .png / .gif', 'error', '8000');
                 } else {
                     toast('Thêm sản phẩm: ' + data + ' thành công!');
                     $('form').trigger('reset');
                     showProducts();
-
                 }
             }
         });
     }
 }
 
-//add product data
-function addItems() {
-    var p_name = $('#p_name').val();
-    var p_desc = $('#p_desc').val();
-    var p_price = $('#p_price').val();
-    var category = $('#category').val();
-    var upload = $('#upload').val();
-    var file = $('#file')[0].files[0];
-
-    var fd = new FormData();
-    fd.append('p_name', p_name);
-    fd.append('p_desc', p_desc);
-    fd.append('p_price', p_price);
-    fd.append('category', category);
-    fd.append('file', file);
-    fd.append('upload', upload);
-    $.ajax({
-        url: "./controller/addItemController.php",
-        method: "post",
-        data: fd,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-            alert('Product Added successfully.');
-            $('form').trigger('reset');
-            showProductItems();
-        }
-    });
+function addProductSize(event) {
+    event.preventDefault();
+    var pdname = $('#pdname').val();
+    var sizename = $('#sizename').val();
+    var quantity = $('#quantity').val();
+    if (pdname == null || sizename == null || quantity == '') {
+        toast('Vui lòng hãy chọn và điền đủ các trường!', 'error');
+        return false;
+    } else {
+        $.ajax({
+            url: "./controller/addPdSizeController.php",
+            method: "post",
+            data: { record: pdname, sizename: sizename, quantity: quantity },
+            success: function(data) {
+                if (data.trim() != 'unsuccessful'.trim()) {
+                    toast('Thêm thông tin cho sản phẩm thành công!');
+                    $('form').trigger('reset');
+                    $('#myModal').modal('hide');
+                    $('#myModal').on('hidden.bs.modal', function() {
+                        showProductSizes();
+                    });
+                } else {
+                    toast('Sản phẩm này đã thiết lập thông tin rồi!', 'error');
+                }
+            }
+        });
+    }
 }
 
-//edit product data
-function itemEditForm(id) {
-    $.ajax({
-        url: "./adminView/editItemForm.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            $('.allContent-section').html(data);
+function addCoupon(event) {
+    event.preventDefault();
+    var cpcode = $('#cpcode').val();
+    var cpdesc = $('#cpdesc').val();
+    var discount = $('#discount').val();
+    var exdate = $('#exdate').val();
+    if (cpcode == '' || discount == '' || exdate == '') {
+        toast('Vui lòng nhập đầy đủ các trường!', 'error');
+        return false;
+
+    } else {
+        var selectedDate = new Date(exdate);
+        var currentDate = new Date();
+
+        if (selectedDate <= currentDate) {
+            toast('Ngày hết hạn phải lớn hơn ngày hiện tại!', 'error');
+            return false;
+
+        } else {
+            var fd = new FormData();
+            fd.append('cpcode', cpcode);
+            fd.append('cpdesc', cpdesc);
+            fd.append('discount', discount);
+            fd.append('exdate', exdate);
+
+            $.ajax({
+                url: "./controller/addCouponController.php",
+                method: "post",
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (data.trim() != 'unsuccessful'.trim()) {
+                        toast('Thêm mã giảm giá thành công!');
+                        $('form').trigger('reset');
+                        $('#myModal').modal('hide');
+                        $('#myModal').on('hidden.bs.modal', function() {
+                            showCoupons();
+                        });
+                    } else {
+                        toast('Đã tồn tại mã giảm giá này rồi!', 'error');
+                    }
+                }
+            });
         }
-    });
+    }
 }
 
-//update product after submit
-function updateItems() {
-    var product_id = $('#product_id').val();
-    var p_name = $('#p_name').val();
-    var p_desc = $('#p_desc').val();
-    var p_price = $('#p_price').val();
-    var category = $('#category').val();
-    var existingImage = $('#existingImage').val();
-    var newImage = $('#newImage')[0].files[0];
-    var fd = new FormData();
-    fd.append('product_id', product_id);
-    fd.append('p_name', p_name);
-    fd.append('p_desc', p_desc);
-    fd.append('p_price', p_price);
-    fd.append('category', category);
-    fd.append('existingImage', existingImage);
-    fd.append('newImage', newImage);
-
-    $.ajax({
-        url: './controller/updateItemController.php',
-        method: 'post',
-        data: fd,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-            alert('Data Update Success.');
-            $('form').trigger('reset');
-            showProductItems();
-        }
-    });
-}
 
 function staffDelete(id, firstname, lastname) {
     Swal.fire(confirmObj('Cảnh báo!', 'Bạn có muốn xóa: ' + firstname + ' ' + lastname + '?', 'error', 'Xóa', 'Hủy')).then((result) => {
@@ -400,6 +454,24 @@ function staffDelete(id, firstname, lastname) {
                     toast('Xóa ' + firstname + ' ' + lastname + ' thành công!');
                     $('form').trigger('reset');
                     showStaff();
+                }
+            });
+        }
+    });
+}
+
+function customerDelete(id, firstname, lastname) {
+    Swal.fire(confirmObj('Cảnh báo!', 'Bạn muốn xóa tài khoản của ' + firstname + ' ' + lastname + '?', 'error', 'Xóa', 'Hủy')).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "./controller/deleteCustomerController.php",
+                method: "post",
+                data: { record: id },
+                success: function(data) {
+                    alert(data);
+                    toast('Xóa tài khoản của ' + firstname + ' ' + lastname + ' thành công!');
+                    $('form').trigger('reset');
+                    goToSection('viewCustomers.php');
                 }
             });
         }
@@ -466,7 +538,7 @@ function productDelete(id, name) {
                 method: "post",
                 data: { record: id },
                 success: function(data) {
-                    toast('Xóa sản phẩm ' + name + ' thành công!');
+                    toast('Xóa sản phẩm ' + name + ' thành công! Nhớ xóa cả ảnh trong ./uploads/ luôn nhé', 'success', '8000');
                     $('form').trigger('reset');
                     showProducts();
                 }
@@ -475,19 +547,40 @@ function productDelete(id, name) {
     });
 }
 
-//delete product data
-function itemDelete(id) {
-    $.ajax({
-        url: "./controller/deleteItemController.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            alert('Items Successfully deleted');
-            $('form').trigger('reset');
-            showProductItems();
+function pdSizeDelete(id, name) {
+    Swal.fire(confirmObj('Cảnh báo!', 'Nếu bạn xóa thông tin của ' + name + ', nếu nó có trong đơn hàng thì sẽ không thể xác định được thông tin sản phẩm nữa.', 'error', 'Xóa', 'Hủy')).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "./controller/deletePdSizeController.php",
+                method: "post",
+                data: { record: id },
+                success: function(data) {
+                    toast('Xóa thông tin của ' + name + ' thành công!');
+                    $('form').trigger('reset');
+                    showProductSizes();
+                }
+            });
         }
     });
 }
+
+function couponDelete(id, name) {
+    Swal.fire(confirmObj('Cảnh báo!', 'Bạn có chắc muốn xóa mã giảm giá: ' + name + '?', 'error', 'Xóa', 'Hủy')).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "./controller/deleteCouponController.php",
+                method: "post",
+                data: { record: id },
+                success: function(data) {
+                    toast('Xóa mã giảm giá: ' + name + ' thành công!');
+                    $('form').trigger('reset');
+                    showCoupons();
+                }
+            });
+        }
+    });
+}
+
 
 
 //delete cart data
@@ -515,25 +608,6 @@ function eachDetailsForm(id) {
     });
 }
 
-
-//delete size data
-
-
-
-//delete variation data
-function variationDelete(id) {
-    $.ajax({
-        url: "./controller/deleteVariationController.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            alert('Successfully deleted');
-            $('form').trigger('reset');
-            showProductSizes();
-        }
-    });
-}
-
 function staffEditForm(id) {
     $.ajax({
         url: "./adminView/editStaffForm.php",
@@ -551,6 +625,7 @@ function updateStaff(event) {
     var username = $('#username').val();
     var firstname = $('#firstname').val();
     var lastname = $('#lastname').val();
+    var password = $('#password').val();
     var sex = $("input[name='sex']:checked").val();
     var email = $('#email').val();
     var phone = $('#phone').val();
@@ -561,6 +636,7 @@ function updateStaff(event) {
     fd.append('username', username);
     fd.append('firstname', firstname);
     fd.append('lastname', lastname);
+    fd.append('password', password);
     fd.append('sex', sex);
     fd.append('email', email);
     fd.append('phone', phone);
@@ -635,19 +711,38 @@ function updateCategory(event) {
     event.preventDefault();
     var id = $('#id').val();
     var catname = $('#catname').val().trim();
+    var file = $('#file')[0].files[0];
     if (catname == '') {
         toast('Bạn phải nhập Tên danh mục!', 'error');
         return false;
     } else {
+
+        var fd = new FormData();
+        fd.append('id', id);
+        fd.append('catname', catname);
+
+        if (!file) {
+            fd.append('file', '');
+
+        } else {
+            fd.append('file', file);
+        }
+
         $.ajax({
             url: "./controller/updateCategoryController.php",
             method: "post",
-            data: { record: id, catname: catname },
+            data: fd,
+            processData: false,
+            contentType: false,
             success: function(data) {
                 if (data.trim() != 'unsuccessful') {
                     toast('Cập nhật danh mục thành ' + data + ' thành công!');
                     $('form').trigger('reset');
                     showCategories();
+                } else if (data.trim() == 'bigsize') {
+                    toast('Kích thước của ảnh không được vượt quá 2MB!', 'error', '6000');
+                } else if (data.trim() == 'notsuitable') {
+                    toast('Bạn chỉ có thể chọn ảnh có đuôi mở rộng: .jpg / .jpeg / .png / .gif', 'error', '6000');
                 } else {
                     toast('Danh mục đã tồn tại!', 'error');
                 }
@@ -711,7 +806,9 @@ function updateProduct(event) {
     var pddesc = $('#pddesc').val();
     var category = $('#category').val();
     var brand = $('#brand').val();
-    var file = $('#file')[0].files[0];
+    var date = $('#date').val();
+    var file = $('#file')[0].files[0]; // Ảnh chính
+    var files = $('#files')[0].files; // Danh sách các ảnh mô tả
     var upload = $('#upload').val();
 
     if (pdname == '' || pdprice == '') {
@@ -726,11 +823,24 @@ function updateProduct(event) {
     fd.append('pddesc', pddesc);
     fd.append('category', category);
     fd.append('brand', brand);
+    fd.append('date', date);
+
     if (!file) {
         fd.append('file', '');
+
     } else {
         fd.append('file', file);
     }
+
+    if (files.length === 0) {
+        fd.append('files', '');
+
+    } else {
+        for (var i = 0; i < files.length; i++) {
+            fd.append('files[]', files[i]);
+        }
+    }
+
     fd.append('upload', upload);
 
     $.ajax({
@@ -755,12 +865,9 @@ function updateProduct(event) {
     });
 }
 
-
-
-//edit variation data
-function variationEditForm(id) {
+function pdSizeEditForm(id) {
     $.ajax({
-        url: "./adminView/editVariationForm.php",
+        url: "./adminView/editPdSizeForm.php",
         method: "post",
         data: { record: id },
         success: function(data) {
@@ -769,106 +876,53 @@ function variationEditForm(id) {
     });
 }
 
+function updatePdSize(event) {
+    event.preventDefault();
+    var id = $('#id').val();
+    var pdname = $('#pdname').val();
+    var sizename = $('#sizename').val();
+    var quantity = $('#quantity').val();
 
-//update variation after submit
-function updateVariations() {
-    var v_id = $('#v_id').val();
-    var product = $('#product').val();
-    var size = $('#size').val();
-    var qty = $('#qty').val();
-    var fd = new FormData();
-    fd.append('v_id', v_id);
-    fd.append('product', product);
-    fd.append('size', size);
-    fd.append('qty', qty);
+    if (quantity == '') {
+        toast('Bạn phải nhập số lượng sản phẩm!', 'error');
+        return false;
 
-    $.ajax({
-        url: './controller/updateVariationController.php',
-        method: 'post',
-        data: fd,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-            alert('Update Success.');
-            $('form').trigger('reset');
-            showProductSizes();
-        }
-    });
+    } else {
+        $.ajax({
+            url: "./controller/updatePdSizeController.php",
+            method: "post",
+            data: { record: id, pdname: pdname, sizename: sizename, quantity: quantity },
+            success: function(data) {
+                if (data.trim() != 'unsuccessful') {
+                    toast('Cập nhật thông tin sản phẩm thành công!');
+                    $('form').trigger('reset');
+                    showProductSizes();
+                } else {
+                    toast('Thông tin sản phẩm đã tồn tại!', 'error');
+                }
+            }
+        });
+    }
 }
 
-function search(id) {
-    $.ajax({
-        url: "./controller/searchController.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            $('.eachCategoryProducts').html(data);
-        }
-    });
+// Tìm kiếm sản phẩm
+function searchProduct() {
+    var productName = $('#s-productName').val();
+    if (productName != '') {
+        $.ajax({
+            url: './controller/searchProductController.php',
+            method: 'POST',
+            data: { productName: productName },
+            success: function(data) {
+                $('#bodytable').html(data);
+            }
+        });
+    } else {
+        showProducts();
+    }
 }
 
-
-function quantityPlus(id) {
-    $.ajax({
-        url: "./controller/addQuantityController.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            $('form').trigger('reset');
-            showMyCart();
-        }
-    });
-}
-
-function quantityMinus(id) {
-    $.ajax({
-        url: "./controller/subQuantityController.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            $('form').trigger('reset');
-            showMyCart();
-        }
-    });
-}
-
-function checkout() {
-    $.ajax({
-        url: "./view/viewCheckout.php",
-        method: "post",
-        data: { record: 1 },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
-
-
-function removeFromWish(id) {
-    $.ajax({
-        url: "./controller/removeFromWishlist.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            alert('Removed from wishlist');
-        }
-    });
-}
-
-
-function addToWish(id) {
-    $.ajax({
-        url: "./controller/addToWishlist.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            alert('Added to wishlist');
-        }
-    });
-}
-
-// Logout
-
+// Đăng xuất
 let logoutBtn = document.getElementById('admin-logout');
 logoutBtn.addEventListener('click', function() {
     Swal.fire(confirmObj('Xác nhận', 'Bạn có chắc chắn muốn đăng xuất', 'warning', 'Đồng ý', 'Hủy')).then((result) => {
@@ -877,8 +931,8 @@ logoutBtn.addEventListener('click', function() {
             xhr.open('GET', 'index.php?action=logout', true);
             xhr.onload = function() {
                 if (xhr.status === 200) {
-                    console.log('Đã đăng xuất');
                     window.location.href = 'login.php'; // Chuyển hướng đến trang đăng nhập sau khi đăng xuất thành công
+
                 } else {
                     alert('Xử lý yêu cầu thất bại');
                 }

@@ -1188,6 +1188,7 @@ table {
     padding-block: .5rem;
     padding-inline: 1rem 0.5rem;
     border-radius: .25rem;
+    border: 1px solid var(--title-color);
 }
 
 .details__action-btn {

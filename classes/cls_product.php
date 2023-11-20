@@ -18,8 +18,18 @@
 
         public function show_products() {
             $query = "SELECT pd.*, ct.catName, br.brandName FROM tbl_product pd 
-                      INNER JOIN tbl_category ct ON pd.catId = ct.catId 
-                      INNER JOIN tbl_brand br ON pd.brandId = br.brandId 
+                      LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
+                      LEFT JOIN tbl_brand br ON pd.brandId = br.brandId 
+                      ORDER BY pd.pdId DESC";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+        public function show_products_by_name($pdname) {
+            $query = "SELECT pd.*, ct.catName, br.brandName FROM tbl_product pd 
+                      LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
+                      LEFT JOIN tbl_brand br ON pd.brandId = br.brandId
+                      WHERE LOWER(pd.pdName) LIKE '%$pdname%'
                       ORDER BY pd.pdId DESC";
             $result = $this->db->select($query);
             return $result;

@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th class="text-center">S.N.</th>
+        <th class="text-center">Image</th>
         <th class="text-center">Category Name</th>
         <th class="text-center" colspan="2">Action</th>
       </tr>
@@ -22,6 +23,7 @@
     
     <tr>
       <td><?=$countcat?></td>
+      <td><img src='./uploads/<?=$result_cat_list["catImg"]?>' height='100px'></td>
       <td><?=$result_cat_list['catName']?></td>
       <td><button class="btn btn-primary" style="height:40px" onclick="categoryEditForm('<?=$result_cat_list['catId']?>')">Edit</button></td>
       <td><button class="btn btn-danger" style="height:40px" onclick="categoryDelete('<?=$result_cat_list['catId']?>','<?=$result_cat_list['catName']?>')">Delete</button></td>
@@ -52,6 +54,11 @@
             <div class="form-group">
               <label for="catname">Category Name:</label>
               <input type="text" class="form-control" id="catname">
+            </div>
+
+            <div class="form-group">
+                <label for="file">Choose Image:</label>
+                <input type="file" class="form-control-file" id="file">
             </div>
 
             <div class="form-group">

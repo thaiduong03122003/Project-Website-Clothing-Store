@@ -1,69 +1,110 @@
 <?php
-include_once "../../lib/database.php";
+include_once '../../lib/database.php';
 $db = new Database();
 
-if (isset($_POST['upload'])) {
+if(isset($_POST['upload'])) {
     $pdid = $_POST['pdid'];
     $pdname = $_POST['pdname'];
     $pdprice = $_POST['pdprice'];
     $pddesc = $_POST['pddesc'];
     $category = $_POST['category'];
     $brand = $_POST['brand'];
-    
-    $check_pdname = "SELECT * FROM tbl_product WHERE pdName = '$pdname' AND catId = '$category' AND brandId = '$brand' AND pdId != '$pdid' LIMIT 1";
-     $result_check = $db->select($check_pdname);
-    if ($result_check) {
-        echo 'unsuccessful';
-        exit;
+    $date = $_POST['date'];
 
-    } else {
-        if (!empty($_FILES['file']['name'])) {
-            
-            $permited = array('jpg', 'jpeg', 'png', 'gif');
-            $file_name = $_FILES['file']['name'];
-            $file_size = $_FILES['file']['size'];
-            $file_temp = $_FILES['file']['tmp_name'];
+    $date = date('Y/m/d', strtotime($date));
+
+    // Xử lý ảnh chính
+    if (!empty($_FILES['file']['name'])) {
+        $file_name = $_FILES['file']['name'];
+        $file_size = $_FILES['file']['size'];
+        $file_temp = $_FILES['file']['tmp_name'];
+
+        $div = explode('.', $file_name);
+        $file_ext = strtolower(end($div));
+        $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
+        $uploaded_image = "../uploads/".$unique_image;
+
+        if ($file_size > 2097152 || !in_array($file_ext, array('jpg', 'jpeg', 'png', 'gif'))) {
+            echo 'notsuitable';
+            exit;
+        }
+
+        move_uploaded_file($file_temp, $uploaded_image);
+
+        $query = "UPDATE tbl_product SET 
+                    pdName = '$pdname',
+                    pdPrice = '$pdprice',
+                    pdDesc = '$pddesc',
+                    pdImg = '$unique_image',
+                    pdDate = '$date',
+                    catId = '$category',
+                    brandId = '$brand'
+                    WHERE pdId = '$pdid'";
+
+        $result = $db->update($query);
+
+        if (!$result) {
+            echo 'unsuccessful';
+            exit;
+        }
+    }
+
+    // Xử lý ảnh mô tả
+    if (!empty($_FILES['files']['name'][0])) {
+        $uploaded_images = array();
+
+        foreach($_FILES['files']['name'] as $key => $image) {
+            $file_name = $_FILES['files']['name'][$key];
+            $file_size = $_FILES['files']['size'][$key];
+            $file_temp = $_FILES['files']['tmp_name'][$key];
 
             $div = explode('.', $file_name);
             $file_ext = strtolower(end($div));
-            $unique_image = substr(md5(time()), 0, 10) . '.' . $file_ext;
-            $uploaded_image = "../uploads/" . $unique_image;
+            $unique_image = substr(md5(time() . $key), 0, 10).'.'.$file_ext;
+            $uploaded_image = "../uploads/".$unique_image;
 
-            if ($file_size > 2097152) {
-                echo 'bigsize';
-                exit;
-            } elseif (in_array($file_ext, $permited) === false) {
+            if ($file_size > 2097152 || !in_array($file_ext, array('jpg', 'jpeg', 'png', 'gif'))) {
                 echo 'notsuitable';
                 exit;
             }
 
             move_uploaded_file($file_temp, $uploaded_image);
-            $query = "UPDATE tbl_product SET 
-                        pdName = '$pdname',
-                        pdprice = '$pdprice',
-                        pdDesc = '$pddesc',
-                        catId = '$category',
-                        brandId = '$brand',
-                        pdImg = '$unique_image'
-                        WHERE pdId = '$pdid'";
-
-        } else {
-            $query = "UPDATE tbl_product SET 
-                        pdName = '$pdname',
-                        pdprice = '$pdprice',
-                        pdDesc = '$pddesc',
-                        catId = '$category',
-                        brandId = '$brand'
-                        WHERE pdId = '$pdid'";
+            $uploaded_images[] = $unique_image;
         }
+
+        $desc_images = implode(',', $uploaded_images);
+
+        $query = "UPDATE tbl_product SET 
+                    pdDescImg = '$desc_images'
+                    WHERE pdId = '$pdid'";
 
         $result = $db->update($query);
-        
+
         if (!$result) {
             echo 'unsuccessful';
-        } else {
-            echo $pdname;
+            exit;
         }
     }
+
+    // Nếu không cập nhật ảnh
+    if (empty($_FILES['files']['name'][0])) {
+        $query = "UPDATE tbl_product SET 
+                    pdName = '$pdname',
+                    pdPrice = '$pdprice',
+                    pdDesc = '$pddesc',
+                    pdDate = '$date',
+                    catId = '$category',
+                    brandId = '$brand'
+                    WHERE pdId = '$pdid'";
+
+        $result = $db->update($query);
+
+        if (!$result) {
+            echo 'unsuccessful';
+            exit;
+        }
+    }
+
+    echo $pdname;
 }
 ?>

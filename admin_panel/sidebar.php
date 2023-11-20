@@ -21,7 +21,7 @@
                 }
             ?>
         </span>
-        <span style="font-size:1.25rem; color: #f5adc4;">
+        <span style="font-size:1.25rem; color: #7eec1d;">
             <?php
                 echo Session::get('adminName');
             ?>
@@ -30,23 +30,24 @@
 </div>
     <div class="sidebar_menu">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa fa-times"></i></a>
-        <a href="#dashboard" onclick="showDashboard()" class="menu_btn"><i class="fa fa-bar-chart"></i> Dashboard</a>
+        <a href="#dashboard" onclick="goToSection('viewDashboard.php')" class="menu_btn"><i class="fa fa-bar-chart"></i> Dashboard</a>
 
         <?php
             if(Session::get('adminRole') == '0') {
-                echo '<a href="#staff" onclick="showStaff()" class="menu_btn"><i class="fa fa-user-circle-o"></i> Staff</a>';
+                echo '<a href="#staff" onclick="goToSection(\'viewStaff.php\')" class="menu_btn"><i class="fa fa-user-circle-o"></i> Staff</a>';
             } else {
                 echo '';
             }
         ?>
 
-        <a href="#customers" onclick="showCustomers()" class="menu_btn"><i class="fa fa-users"></i> Customers</a>
-        <a href="#brands" onclick="showBrands()" class="menu_btn"><i class="fa fa-tags"></i> Brands</a>
-        <a href="#category" onclick="showCategories()" class="menu_btn"><i class="fa fa-th-large"></i> Categories</a>
-        <a href="#sizes" onclick="showSizes()" class="menu_btn"><i class="fa fa-tasks"></i> Sizes</a>
-        <a href="#productsizes" onclick="showProductSizes()" class="menu_btn"><i class="fa fa-th-list"></i> Product Sizes</a>    
-        <a href="#products" onclick="showProducts()" class="menu_btn"><i class="fa fa-th"></i> Products</a>
-        <a href="#orders" onclick="showOrders()" class="menu_btn"><i class="fa fa-shopping-bag"></i> Orders</a>
+        <a href="#customers" onclick="goToSection('viewCustomers.php')" class="menu_btn"><i class="fa fa-users"></i> Customers</a>
+        <a href="#brands" onclick="goToSection('viewBrands.php')" class="menu_btn"><i class="fa fa-tags"></i> Brands</a>
+        <a href="#category" onclick="goToSection('viewCategories.php')" class="menu_btn"><i class="fa fa-th-large"></i> Categories</a>
+        <a href="#sizes" onclick="goToSection('viewSizes.php')" class="menu_btn"><i class="fa fa-tasks"></i> Sizes</a>  
+        <a href="#products" onclick="goToSection('viewProducts.php')" class="menu_btn"><i class="fa fa-th"></i> Products</a>
+        <a href="#productsizes" onclick="goToSection('viewProductSizes.php')" class="menu_btn"><i class="fa fa-th-list"></i> Product Sizes</a>  
+        <a href="#orders" onclick="goToSection('viewAllOrders.php')" class="menu_btn"><i class="fa fa-shopping-bag"></i> Orders</a>
+        <a href="#orders" onclick="goToSection('viewCoupons.php')" class="menu_btn"><i class="fa fa-ticket"></i> Coupons</a>
     </div>
   <!---->
 </div>

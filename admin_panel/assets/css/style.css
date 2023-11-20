@@ -127,6 +127,7 @@
 /* The button used to open the sidebar */
 
 .openbtn {
+    position: fixed;
     font-size: 20px;
     cursor: pointer;
     padding: 10px 15px;

@@ -16,7 +16,8 @@
             $get_product_id = $pd->show_product_by_id($id_pd);
             if ($get_product_id) {
                 while ($result_get_product = $get_product_id->fetch_assoc()) {
-        
+                    $database_date = $result_get_product['pdDate'];
+                    $input_date_format = date("Y-m-d", strtotime($database_date));
         ?>
             <div class="form-group">
                 <input type="text" class="form-control" id="id" value="<?=$result_get_product['pdId']?>" hidden>
@@ -88,11 +89,33 @@
 
               </select>
             </div>
+
+            <div class="form-group">
+                <label for="date">Date Import Product:</label>
+                <input type="date" class="form-control" id="date" value="<?=$input_date_format?>">
+            </div>
             
             <div class="form-group">
                 <label for="file">Choose Image:</label>
                 <img class="form-group" src="./uploads/<?php echo $result_get_product['pdImg'] ?>" width=140px > <br>
                 <input type="file" class="form-control-file" id="file">
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label for="files">Choose Description Image:</label>
+
+                <?php
+                    $desc_images = explode(',', $result_get_product['pdDescImg']);
+                    foreach ($desc_images as $desc_image) {
+                        if (!empty($desc_image)) {
+                            echo '<img src="./uploads/'.$desc_image.'"width="140px" class="form-group mr-2">';
+                        }
+                    }
+                ?>
+
+                <input type="file" class="form-control-file" id="files" name="files[]" multiple="multiple">
             </div>
 
             <div class="form-group">

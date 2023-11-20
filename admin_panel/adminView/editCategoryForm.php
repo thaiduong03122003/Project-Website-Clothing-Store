@@ -27,6 +27,12 @@
     </div>
 
     <div class="form-group">
+        <label for="file">Choose Image:</label>
+        <img class="form-group" src="./uploads/<?php echo $result_get_cat['catImg'] ?>" width=140px > <br>
+        <input type="file" class="form-control-file" id="file">
+    </div>
+
+    <div class="form-group">
       <button type="button" onclick="return updateCategory(event)"  style="height:40px" class="btn btn-primary">Update</button>
     </div>
 

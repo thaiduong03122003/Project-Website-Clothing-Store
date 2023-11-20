@@ -4,7 +4,7 @@
     
     if(isset($_POST['record'])) {
         $id=$_POST['record'];
-        $delsize = $st->del_size($id);
+        $delsize = $size->del_size($id);
 
         if($delsize){
             echo"Size Deleted";

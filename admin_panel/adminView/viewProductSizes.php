@@ -1,10 +1,10 @@
-
-<div >
-  <h2>Product Sizes Item</h2>
+<div class="container_right_side">
+  <h3>Product Sizes List</h3>
   <table class="table ">
     <thead>
       <tr>
         <th class="text-center">S.N.</th>
+        <th class="text-center">Image</th>
         <th class="text-center">Product Name</th>
         <th class="text-center">Size</th>
         <th class="text-center">Stock Quantity</th>
@@ -12,86 +12,103 @@
       </tr>
     </thead>
     <?php
-      include_once "../config/dbconnect.php";
-      $sql="SELECT * from product_size_variation v, product p, sizes s WHERE p.product_id=v.product_id AND v.size_id=s.size_id ";
-      $result=$conn-> query($sql);
-      $count=1;
-      if ($result-> num_rows > 0){
-        while ($row=$result-> fetch_assoc()) {
+      include '../../classes/cls_product_size.php';
+      include '../../classes/cls_product.php';
+      include '../../classes/cls_size.php';
+      
+      $ps = new productsize();
+
+      $pslist = $ps->show_product_sizes();
+      if($pslist) {
+        $countps = 0;
+        while ($result_ps_list = $pslist->fetch_assoc()) {
+            $countps++; 
     ?>
+    
     <tr>
-      <td><?=$count?></td>
-      <td><?=$row["product_name"]?></td>
-      <td><?=$row["size_name"]?></td>      
-      <td><?=$row["quantity_in_stock"]?></td>     
-      <td><button class="btn btn-primary" style="height:40px" onclick="variationEditForm('<?=$row['variation_id']?>')">Edit</button></td>
-      <td><button class="btn btn-danger" style="height:40px"  onclick="variationDelete('<?=$row['variation_id']?>')">Delete</button></td>
-      </tr>
-      <?php
-            $count=$count+1;
-          }
+      <td><?=$countps?></td>
+      <td><img src='./uploads/<?=$result_ps_list["pdImg"]?>' height='100px'></td>
+      <td><?=$result_ps_list['pdName']?></td>
+      <td><?=$result_ps_list['sizeName']?></td>
+      <td><?=$result_ps_list['quantityInStock']?></td>
+      <td><button class="btn btn-primary" style="height:40px" onclick="pdSizeEditForm('<?=$result_ps_list['psId']?>')">Edit</button></td>
+      <td><button class="btn btn-danger" style="height:40px" onclick="pdSizeDelete('<?=$result_ps_list['psId']?>','<?=$result_ps_list['pdName']?>')">Delete</button></td>
+    </tr>
+
+    <?php
         }
-      ?>
+      }
+    ?>
   </table>
 
   <!-- Trigger the modal with a button -->
-  <button type="button" class="btn btn-secondary" style="height:40px" data-toggle="modal" data-target="#myModal">
-    Add Size Variation
+  <button type="button" class="btn btn-secondary btn_add_right_side" style="height:40px" data-toggle="modal" data-target="#myModal">
+    Add Product Size
   </button>
 
-  <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">New Product Size Variation</h4>
+          <h4 class="modal-title">New Product Size</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-          <form  enctype='multipart/form-data' action="./controller/addVariationController.php" method="POST">
+          <form  enctype='multipart/form-data'  method="POST">
+
+            <div class="form-group">
+              <label>Product Name:</label>
+              <select id="pdname" >
+                <option disabled selected>Select product</option>
+
+                <?php
+                    $pd = new product();
+                    $pdlist = $pd->show_products();
+                    if ($pdlist) {
+                        while($resultpd = $pdlist->fetch_assoc()) {
+                ?>
+
+                <option value="<?=$resultpd['pdId']?>"><?=$resultpd['pdName']?></option>
+
+                <?php
+                        }
+                    }
+                ?>
+
+              </select>
+            </div>
             
             <div class="form-group">
-              <label>Product:</label>
-              <select name="product" >
-                <option disabled selected>Select product</option>
-                <?php
-
-                  $sql="SELECT * from product";
-                  $result = $conn-> query($sql);
-
-                  if ($result-> num_rows > 0){
-                    while($row = $result-> fetch_assoc()){
-                      echo"<option value='".$row['product_id']."'>".$row['product_name'] ."</option>";
-                    }
-                  }
-                ?>
-              </select>
-            </div>
-            <div class="form-group">
               <label>Size:</label>
-              <select name="size" >
+              <select id="sizename" >
                 <option disabled selected>Select size</option>
+
                 <?php
-
-                  $sql="SELECT * from sizes";
-                  $result = $conn-> query($sql);
-
-                  if ($result-> num_rows > 0){
-                    while($row = $result-> fetch_assoc()){
-                      echo"<option value='".$row['size_id']."'>".$row['size_name'] ."</option>";
-                    }
-                  }
+                    $size = new size();
+                    $szlist = $size->show_sizes();
+                    if ($szlist) {
+                        while($resultsz = $szlist->fetch_assoc()) {
                 ?>
+
+                <option value="<?=$resultsz['sizeId']?>"><?=$resultsz['sizeName']?></option>
+
+                <?php
+                        }
+                    }
+                ?>
+
               </select>
             </div>
+            
             <div class="form-group">
-              <label for="qty">Stock Quantity:</label>
-              <input type="number" class="form-control" name="qty" required>
+                <label for="quantity">Quantity:</label>
+                <input type="number" class="form-control" id="quantity">
             </div>
+            
             <div class="form-group">
-              <button type="submit" class="btn btn-secondary" name="upload" style="height:40px">Add Variation</button>
+              <button type="button" onclick="addProductSize(event)" class="btn btn-secondary" id="upload" style="height:40px">Save</button>
             </div>
           </form>
 
