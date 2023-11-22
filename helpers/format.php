@@ -7,6 +7,10 @@ class Format{
     return date('F j, Y, g:i a', strtotime($date));
  }
 
+ public function formatPrice($num){
+   return number_format($num, 0, ',', '.') . ' VNĐ';
+}
+
  public function textShorten($text, $limit = 400){
     $text = $text. " ";
     $text = substr($text, 0, $limit);

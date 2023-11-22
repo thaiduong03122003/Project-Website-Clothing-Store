@@ -53,7 +53,7 @@
       <?php
           }
       ?>
-        <td><button class="btn btn-primary" style="height:40px" onclick="productEditForm('<?=$result_cus_list['cusId']?>')">Edit</button></td>
+        <td><button class="btn btn-primary" style="height:40px" onclick="customerEditForm('<?=$result_cus_list['cusId']?>')">Edit</button></td>
         <td><button class="btn btn-danger" style="height:40px" onclick="customerDelete('<?=$result_cus_list['cusId']?>', '<?=$result_cus_list['cusFirstname']?>', '<?=$result_cus_list['cusLastname']?>')">Delete</button></td>
     </tr>
 

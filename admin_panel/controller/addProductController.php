@@ -8,6 +8,7 @@ if (isset($_POST['upload'])) {
     $pddesc = $_POST['pddesc'];
     $category = $_POST['category'];
     $brand = $_POST['brand'];
+    $status = $_POST['status'];
     $date = $_POST['date'];
     if(empty($date)) {
         date_default_timezone_set('Asia/Ho_Chi_Minh');
@@ -77,8 +78,8 @@ if (isset($_POST['upload'])) {
         // Chuyển mảng $desc_images thành chuỗi để lưu vào cột pdDescImg
         $desc_images_str = implode(',', $desc_images);
 
-        $query = "INSERT INTO tbl_product (pdName, pdDesc, pdPrice, pdImg, pdDescImg, pdDate, catId, brandId) 
-                  VALUES ('$pdname', '$pddesc', '$pdprice', '$main_image', '$desc_images_str', '$date', '$category', '$brand')";
+        $query = "INSERT INTO tbl_product (pdName, pdDesc, pdPrice, pdImg, pdDescImg, pdDate, pdStatus,catId, brandId) 
+                  VALUES ('$pdname', '$pddesc', '$pdprice', '$main_image', '$desc_images_str', '$date', $status, '$category', '$brand')";
 
         $result_insert = $db->insert($query);
 

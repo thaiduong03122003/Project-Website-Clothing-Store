@@ -85,6 +85,30 @@
             </div>
 
             <div class="form-group">
+              <label for="pdstatus">Status:</label>
+              <div class="row ml-5">
+                <div class="col-auto">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form-check-lg" type="radio" name="status" value="0" checked>
+                        <label class="form-check-label" for="male">Not Featured</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form-check-lg" type="radio" name="status" value="1">
+                        <label class="form-check-label" for="female">Featured</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form-check-lg" type="radio" name="status" value="2">
+                        <label class="form-check-label" for="other">New Added</label>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
                 <button type="button" onclick="addProduct(event)" class="btn btn-secondary" id="upload" style="height:40px">Save</button>
             </div>
     </form>

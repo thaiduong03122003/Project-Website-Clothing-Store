@@ -62,9 +62,14 @@ function ready() {
     let addCart = document.getElementsByClassName('add-cart');
     for (let i = 0; i < addCart.length; i++) {
         let button = addCart[i];
-        button.addEventListener('click', addCartClicked);
+        button.addEventListener('click', function(i) {
+            return function() {
+                addCartClicked(i);
+            }
+        }(i));
     }
 }
+
 
 //Function Remove Items From Cart
 function removeCartItem(event) {
@@ -82,36 +87,52 @@ function quantityChanged(event) {
 }
 
 //Funtion Add To Cart
-function addCartClicked(event) {
+function addCartClicked(i) {
     let button = event.target;
     let shopProducts = button.closest('.product__item');
     let title = shopProducts.querySelector('.product__title').innerText;
     let price = shopProducts.querySelector('.new__price').innerText;
     let productImg = shopProducts.querySelector('.product__img.default').src;
 
-    addProductToCart(title, price, productImg);
+    // Câu lệnh vẫn chưa được tối ưu vì đang phải chọn tất cả các nút 'add to cart' có trong trang 
+    let shopProducts2 = button.closest('.main');
+    let productSId = shopProducts2.querySelectorAll('.product_size_id');
+    let pdSId = productSId[i].innerText;
+    let productSName = shopProducts2.querySelectorAll('.add-cart');
+    let pdSName = productSName[i].innerText;
+    let productSQuantity = shopProducts2.querySelectorAll('.product_size_quantity');
+    let pdSQuantity = productSQuantity[i].innerText;
+    addProductToCart(pdSId, title, price, productImg, pdSName, pdSQuantity);
     updateTotal();
 }
 
-function addProductToCart(title, price, image) {
+function addProductToCart(psid, title, price, image, pdsname, quantity) {
     let cartShopBox = document.createElement('div');
     cartShopBox.classList.add('cart__box');
 
     let cartItems = document.getElementsByClassName('cart__content-menu')[0];
-    let cartItemsNames = cartItems.getElementsByClassName('cart__product-title');
+    let cartItemsSId = cartItems.querySelectorAll('.cart__productsize-id');
 
-    for (let i = 0; i < cartItemsNames.length; i++) {
-        if (cartItemsNames[i].innerText == title) {
-            alert('Bạn đã thêm sản phẩm này trong giỏ hàng rồi!');
-            return;
+    if (cartItemsSId.length === 0) {
+        toast('Thêm sản phẩm: ' + title + ' thành công!', 'success', '2000');
+    } else {
+        for (let i = 0; i < cartItemsSId.length; i++) {
+            if (cartItemsSId[i].innerText == psid) {
+                alert('Bạn đã thêm sản phẩm này vào giỏ hàng rồi');
+                return false;
+            }
         }
+        toast('Thêm sản phẩm: ' + title + ' thành công!', 'success', '2000');
     }
+
     let cartBoxContent = `
                             <img src="${image}" alt="" class="cart__box-img">
                             <div class="detail__box">
+                                <div class="cart__productsize-id">${psid}</div>
                                 <div class="cart__product-title">${title}</div>
+                                <div>Size: <span class="cart__productsize-title">${pdsname}</span></div>
                                 <div class="cart__product-price">${price}</div>
-                                <input type="number" name="" id="" class="cart__product-quantity" value="1">
+                                <input type="number" name="" id="" class="cart__product-quantity" max="${quantity}" value="1">
                             </div>
                             <i class="fi fi-rs-trash table__trash cart__remove"></i>`;
 
@@ -132,7 +153,7 @@ function updateTotal() {
         let cartBox = cartBoxes[i];
         let priceElement = cartBox.getElementsByClassName('cart__product-price')[0];
         let quantityElement = cartBox.getElementsByClassName('cart__product-quantity')[0];
-        let price = parseFloat(priceElement.innerText.replace("$", ""));
+        let price = parseInt(priceElement.innerText.replace("VNĐ", ""));
         let quantity = parseInt(quantityElement.value);
 
         // Kiểm tra nếu số lượng là 0 thì xóa sản phẩm khỏi giỏ hàng
@@ -144,7 +165,12 @@ function updateTotal() {
     }
 
     // Cập nhật tổng tiền
-    document.getElementsByClassName('cart__total-price')[0].innerText = '$' + total;
+    let formattedNumber = total.toLocaleString('vi-VN', { minimumFractionDigits: 0 });
+    if (formattedNumber != 0)
+        document.getElementsByClassName('cart__total-price')[0].innerText = formattedNumber + '.000 VNĐ';
+    else
+        document.getElementsByClassName('cart__total-price')[0].innerText = '0 VNĐ';
+
 }
 
 /*=============== IMAGE GALLERY ===============*/
@@ -233,3 +259,44 @@ tabs.forEach((tab) => {
     });
 
 });
+
+
+// AJAX
+
+// Hiển thị hộp thoại thông báo
+function confirmObj(title, text, icon, confirmText, cancelText) {
+    return {
+        title: title,
+        text: text,
+        icon: icon,
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: confirmText,
+        cancelButtonText: cancelText
+    };
+}
+
+//Hiển thị thông báo bên góc trên phải
+function showToast(type, message) {
+    toastMixin.fire({
+        icon: type,
+        title: ' ' + message
+    });
+}
+
+function toast(message, icon = 'success', timer = '2500', position = 'top-end') {
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: position,
+        showConfirmButton: false,
+        timer: timer,
+        timerProgressBar: true,
+    })
+
+    Toast.fire({
+        icon: icon,
+        title: message
+    });
+}

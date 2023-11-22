@@ -17,6 +17,7 @@
         <th class="text-center">Brand</th>
         <th class="text-center">Price (VNĐ)</th>
         <th title="Ngày nhập sản phẩm" class="text-center">Date</th>
+        <th title="Loại hình sản phẩm" class="text-center">Type</th>
         <th class="text-center" colspan="2">Action</th>
       </tr>
     </thead>
@@ -44,6 +45,17 @@
         <td><?=$result_pd_list['brandName']?></td>
         <td><?=$result_pd_list['pdPrice']?></td>
         <td><?=$result_pd_list['pdDate']?></td>
+        
+        <?php
+          if($result_pd_list['pdStatus'] == '0') {
+            echo "<td title='Not Featured'>NF</td>";
+          } else if ($result_pd_list['pdStatus'] == '1') {
+            echo "<td title='Featured'>F</td>";
+          } else {
+            echo "<td title='New Added'>NA</td>";
+          }
+        ?>
+
         <td><button class="btn btn-primary" style="height:40px" onclick="productEditForm('<?=$result_pd_list['pdId']?>')">Edit</button></td>
         <td><button class="btn btn-danger" style="height:40px" onclick="productDelete('<?=$result_pd_list['pdId']?>','<?=$result_pd_list['pdName']?>')">Delete</button></td>
         </tr>

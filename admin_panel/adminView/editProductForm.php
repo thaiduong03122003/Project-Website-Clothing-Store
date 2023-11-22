@@ -119,6 +119,30 @@
             </div>
 
             <div class="form-group">
+              <label for="pdstatus">Status:</label>
+              <div class="row ml-5">
+                <div class="col-auto">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form-check-lg" type="radio" name="status" value="0" <?php if($result_get_product['pdStatus'] == '0') echo 'checked'?>>
+                        <label class="form-check-label" for="male">Not Featured</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form-check-lg" type="radio" name="status" value="1" <?php if($result_get_product['pdStatus'] == '1') echo 'checked'?>>
+                        <label class="form-check-label" for="female">Featured</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input form-check-lg" type="radio" name="status" value="2" <?php if($result_get_product['pdStatus'] == '2') echo 'checked'?>>
+                        <label class="form-check-label" for="other">New Added</label>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
                 <button type="button" onclick="updateProduct(event)" class="btn btn-secondary" id="upload" style="height:40px">Update</button>
             </div>
         

@@ -324,6 +324,7 @@ function addProduct(event) {
     var date = $('#date').val();
     var file = $('#file')[0].files[0];
     var files = $('#files')[0].files;
+    var status = $("input[name='status']:checked").val();
     var upload = $('#upload').val();
     if (pdname == '' || pdprice == '' || category == null || brand == null || file === undefined || files.length === 0) {
         toast('Không được bỏ trống!', 'error');
@@ -342,6 +343,7 @@ function addProduct(event) {
             fd.append('files[]', files[i]);
         }
 
+        fd.append('status', status);
         fd.append('upload', upload);
 
         $.ajax({
@@ -660,6 +662,54 @@ function updateStaff(event) {
     });
 }
 
+function customerEditForm(id) {
+    $.ajax({
+        url: "./adminView/editCustomerForm.php",
+        method: "post",
+        data: { record: id },
+        success: function(data) {
+            $('.allContent-section').html(data);
+        }
+    });
+}
+
+function updateCustomer(event) {
+    event.preventDefault();
+    var id = $('#id').val();
+    var firstname = $('#firstname').val();
+    var lastname = $('#lastname').val();
+    var password = $('#password').val();
+    var sex = $("input[name='sex']:checked").val();
+    var email = $('#email').val();
+    var phone = $('#phone').val();
+
+    var fd = new FormData();
+    fd.append('id', id);
+    fd.append('firstname', firstname);
+    fd.append('lastname', lastname);
+    fd.append('password', password);
+    fd.append('sex', sex);
+    fd.append('email', email);
+    fd.append('phone', phone);
+
+    $.ajax({
+        url: './controller/updateCusController.php',
+        method: 'post',
+        data: fd,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            if (data.trim() != 'unsuccessful'.trim()) {
+                toast('Cập nhật Username: ' + data + ' thành công!');
+                $('form').trigger('reset');
+                goToSection('viewCustomers.php');
+            } else {
+                toast('Username đã tồn tại!', 'error');
+            }
+        }
+    });
+}
+
 function brandEditForm(id) {
     $.ajax({
         url: "./adminView/editBrandForm.php",
@@ -809,6 +859,7 @@ function updateProduct(event) {
     var date = $('#date').val();
     var file = $('#file')[0].files[0]; // Ảnh chính
     var files = $('#files')[0].files; // Danh sách các ảnh mô tả
+    var status = $("input[name='status']:checked").val();
     var upload = $('#upload').val();
 
     if (pdname == '' || pdprice == '') {
@@ -841,6 +892,7 @@ function updateProduct(event) {
         }
     }
 
+    fd.append('status', status);
     fd.append('upload', upload);
 
     $.ajax({

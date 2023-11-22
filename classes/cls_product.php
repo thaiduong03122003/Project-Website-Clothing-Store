@@ -25,6 +25,25 @@
             return $result;
         }
 
+        public function show_products_8() {
+            $query = "SELECT pd.*, ct.catName, br.brandName FROM tbl_product pd 
+                      LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
+                      LEFT JOIN tbl_brand br ON pd.brandId = br.brandId
+                      ORDER BY pd.pdId DESC LIMIT 8";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+        public function show_products_8_by_type($type) {
+            $query = "SELECT pd.*, ct.catName, br.brandName FROM tbl_product pd 
+                      LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
+                      LEFT JOIN tbl_brand br ON pd.brandId = br.brandId
+                      WHERE pd.pdStatus = '$type'
+                      ORDER BY pd.pdId DESC LIMIT 8";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
         public function show_products_by_name($pdname) {
             $query = "SELECT pd.*, ct.catName, br.brandName FROM tbl_product pd 
                       LEFT JOIN tbl_category ct ON pd.catId = ct.catId 

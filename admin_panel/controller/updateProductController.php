@@ -9,6 +9,7 @@ if(isset($_POST['upload'])) {
     $pddesc = $_POST['pddesc'];
     $category = $_POST['category'];
     $brand = $_POST['brand'];
+    $status = $_POST['status'];
     $date = $_POST['date'];
 
     $date = date('Y/m/d', strtotime($date));
@@ -37,6 +38,7 @@ if(isset($_POST['upload'])) {
                     pdDesc = '$pddesc',
                     pdImg = '$unique_image',
                     pdDate = '$date',
+                    pdStatus = '$status',
                     catId = '$category',
                     brandId = '$brand'
                     WHERE pdId = '$pdid'";
@@ -93,6 +95,7 @@ if(isset($_POST['upload'])) {
                     pdPrice = '$pdprice',
                     pdDesc = '$pddesc',
                     pdDate = '$date',
+                    pdStatus = '$status',
                     catId = '$category',
                     brandId = '$brand'
                     WHERE pdId = '$pdid'";

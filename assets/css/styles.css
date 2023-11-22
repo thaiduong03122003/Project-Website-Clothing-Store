@@ -1,6 +1,6 @@
 /*=============== GOOGLE FONTS ===============*/
 
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Spartan:wght@400;500;600;700&family=Roboto:ital,wght@0,300;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;700&display=swap');
 
 /*=============== VARIABLES CSS ===============*/
 
@@ -21,8 +21,8 @@
     --border-color-alt: hsl(113, 15%, 90%);
     /*========== Font and typography ==========*/
     /* .5rem = 8px | 1rem = 16px ... */
-    --body-font: 'Lato', sans-serif;
-    --second-font: 'Spartan', sans-serif;
+    --body-font: 'Open Sans', sans-serif;
+    --second-font: 'Inter', sans-serif;
     --big-font-size: 3.5rem;
     --h1-font-size: 2.75rem;
     --h2-font-size: 2rem;
@@ -585,6 +585,19 @@ table {
     transition: all .2s var(--transition);
 }
 
+.product_id,
+.product_size_id,
+.product_size_quantity,
+.cart__productsize-id {
+    display: none;
+}
+
+.alertOutStock {
+    text-align: center;
+    background-color: #fff;
+    padding: 1rem;
+}
+
 .product__banner {
     padding: 0.625rem 0.75rem 0.75rem;
 }
@@ -636,6 +649,7 @@ table {
     color: var(--text-color);
     font-size: var(--small-font-size);
     position: relative;
+    cursor: pointer;
 }
 
 .action__btn::before,

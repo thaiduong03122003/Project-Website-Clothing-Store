@@ -57,7 +57,7 @@
             </div>
 
             <div class="form-group">
-                <label for="file">Choose Image:</label>
+                <label for="file">Ảnh đại diện cho danh mục:</label>
                 <input type="file" class="form-control-file" id="file">
             </div>
 

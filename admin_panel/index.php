@@ -1,7 +1,7 @@
 <?php
     include_once "./adminHeader.php";
     include "./sidebar.php";
-    include "./config/dbconnect.php";
+    // include "./config/dbconnect.php";
 
 ?>
 

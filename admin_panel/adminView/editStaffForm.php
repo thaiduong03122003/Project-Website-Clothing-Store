@@ -37,7 +37,7 @@
     </div>
 
     <div class="form-group">
-        <label for="lastname">Password (if necessary):</label>
+        <label for="password">Password (if necessary):</label>
         <input type="text" class="form-control" id="password">
     </div>
 

@@ -31,6 +31,15 @@
             return $result;
         }
 
+        public function show_ps_by_pdid ($id) {
+            $query ="SELECT ps.*, s.sizeName FROM tbl_product_size ps
+                     LEFT JOIN tbl_size s
+                     ON ps.sizeId = s.sizeId
+                     WHERE pdId = '$id'";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
         public function del_product_size($id) {
             $query = "DELETE FROM tbl_product_size WHERE psId = '$id'";
             $result = $this->db->delete($query);
