@@ -22,17 +22,26 @@
                         <a href="./../shop.php" class="nav__link">Sản phẩm</a>
                     </li>
 
-                    <li class="nav__item">
-                        <a href="./../accounts.php" class="nav__link">Tài khoản của tôi</a>
-                    </li>
+                    
 
                     <li class="nav__item">
                         <a href="./../cart.php" class="nav__link">Giỏ hàng</a>
                     </li>
 
-                    <li class="nav__item">
-                        <a href="" class="nav__link" style="color: red;">Đăng xuất</a>
-                    </li>
+                    <?php 
+                        $login_check = Session::get('customer_login');
+                        if($login_check) {
+                    ?>
+                        <li class="nav__item">
+                            <a href="./../accounts.php" class="nav__link">Tài khoản của tôi</a>
+                        </li>
+
+                        <li class="nav__item">
+                            <p id="customer-logout" onclick="logOut()" class="nav__link">Đăng xuất</p>
+                        </li>
+                    <?php
+                        } 
+                    ?>
                 </ul>
 
                 <div class="header__search">
@@ -55,7 +64,7 @@
 
                 <p class="header__action-btn" id="add-cart-icon">
                     <img src="./assets/img/icon-cart.svg">
-                    <span class="count">3</span>
+                    <span id="count-cart" class="count">0</span>
                 </p>
 
                 <div class="header__action-btn nav__toggle" id="nav-toggle">
@@ -74,13 +83,16 @@
                         <div class="cart__total-title">Tổng: </div>
                         <div class="cart__total-price">0 VNĐ</div>
                     </div>
-
                     <!-- Nút đến giỏ hàng -->
-                    <a href="cart.html" class="btn cart__total-btn">Chi tiết giỏ hàng</a>
+                    <a href="./../cart.php" class="btn cart__total-btn">Chi tiết giỏ hàng</a>
                     <!-- Đóng giỏ hảng -->
                     <i class="fi fi-rs-cross-small" id="cart__close-btn"></i>
 
                 </div>
             </div>
+
+            <a href="#" title="Quay lại đầu trang" id="returnTop" class="return__top">
+                <i class="fi fi-rs-angle-up"></i>
+            </a>
         </nav>
     </header>

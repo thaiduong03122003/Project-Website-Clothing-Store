@@ -40,7 +40,7 @@
                     ?>
 
                     <a href="shop.html" class="category__item swiper-slide">
-                        <img src="./admin_panel/uploads/<?=$result_cat_list['catImg']?>" alt="" height="250px" class="category__img">
+                        <img src="./admin_panel/uploads/<?=$result_cat_list['catImg']?>" alt="" height="200px" class="category__img">
 
                         <h3 class="category__title"><?=$result_cat_list['catName']?></h3>
                     </a>

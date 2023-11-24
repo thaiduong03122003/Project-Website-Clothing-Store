@@ -254,6 +254,11 @@ table {
     transition: all 0.2s var(--transition);
 }
 
+#customer-logout {
+    cursor: pointer;
+    color: red;
+}
+
 .header__search {
     width: 340px;
     position: relative;
@@ -303,13 +308,32 @@ table {
 }
 
 
+/* =============RETURN TOP BUTTON=============== */
+
+.nav .return__top {
+    position: fixed;
+    bottom: 60px;
+    left: 10px;
+    background-color: var(--first-color);
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--title-color);
+    border-radius: 50%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: var(--body-color);
+}
+
+
 /* =============CART MENU=============== */
 
 .cart__menu {
     position: fixed;
     top: 0;
     right: 0;
-    width: 360px;
+    width: 380px;
     min-height: 100vh;
     padding: 1.25rem;
     background-color: var(--body-color);
@@ -332,12 +356,22 @@ table {
     margin-top: 2rem;
 }
 
+.cart__content-menu {
+    max-height: 380px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .cart__box {
     display: grid;
     grid-template-columns: 32% 50% 18%;
     align-items: center;
     gap: 1rem;
     margin-top: 1rem;
+}
+
+cartside-section {
+    display: contents;
 }
 
 .cart__box-img {
@@ -451,6 +485,7 @@ table {
     font-size: var(--small-font-size);
     font-weight: var(--weight-700);
     transition: all 0.4s var(--transition);
+    cursor: pointer;
 }
 
 .btn:hover {
@@ -461,6 +496,7 @@ table {
 
 .btn--md,
 .btn--sm {
+    text-align: center;
     font-family: var(--body-font);
 }
 
@@ -1390,6 +1426,7 @@ table {
 
 .table__trash {
     color: var(--third-color);
+    cursor: pointer;
 }
 
 .cart__actions {
@@ -1565,6 +1602,17 @@ table {
     border-radius: 0.5rem;
 }
 
+.login-register__container .grid__2-cols {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+}
+
+.confirm__rules {
+    margin: 0.25rem 0 0.25rem 0.25rem;
+    font-size: 1rem;
+}
+
 
 /*=============== ACCOUNTS ===============*/
 
@@ -1627,23 +1675,12 @@ table {
     font-size: var(--small-font-size);
 }
 
-.view__order,
-.edit {
+.view__order {
     color: var(--first-color);
 }
 
-.address {
-    font-style: normal;
-    font-size: var(--small-font-size);
-    line-height: 1.5rem;
-}
-
-.city {
-    margin-bottom: .25rem;
-}
-
-.edit {
-    font-size: var(--small-font-size);
+.show__address {
+    width: 100%;
 }
 
 .account__logout {

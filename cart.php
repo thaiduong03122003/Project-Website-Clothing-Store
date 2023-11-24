@@ -35,79 +35,15 @@
                         <th>Remove</th>
                     </tr>
 
-                    <tr>
-                        <td><img src="./assets/img/product-1-2.jpg" class="table__img" alt=""></td>
+                    <tbody id="cart__info">
+                        
+                    </tbody>
 
-                        <td>
-                            <h3 class="table__title">
-                                J.Crew Mercantile Women's Short-Sleeve
-                            </h3>
-                            <p class="table__description">Color: Red</p>
-                            <p class="table__description">Size: M</p>
-                        </td>
-
-                        <td>
-                            <span class="table__price">$110</span>
-                        </td>
-
-                        <td><input type="number" value="3" class="quantity"></td>
-
-                        <td><span class="table__subtotal">$330</span></td>
-
-                        <td><i class="fi fi-rs-trash table__trash"></i></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><img src="./assets/img/product-7-1.jpg" class="table__img" alt=""></td>
-
-                        <td>
-                            <h3 class="table__title">
-                                J.Crew Mercantile Women's Short-Sleeve
-                            </h3>
-                            <p class="table__description">Color: Red</p>
-                            <p class="table__description">Size: M</p>
-                        </td>
-
-                        <td>
-                            <span class="table__price">$110</span>
-                        </td>
-
-                        <td><input type="number" value="3" class="quantity"></td>
-
-                        <td><span class="table__subtotal">$330</span></td>
-
-                        <td><i class="fi fi-rs-trash table__trash"></i></td>
-
-                    </tr>
-
-                    <tr>
-                        <td><img src="./assets/img/product-2-1.jpg" class="table__img" alt=""></td>
-
-                        <td>
-                            <h3 class="table__title">
-                                Amazon Brand - Daily Ritual Women's Jersey
-                            </h3>
-                            <p class="table__description">Color: Red</p>
-                            <p class="table__description">Size: M</p>
-                        </td>
-
-                        <td>
-                            <span class="table__price">$110</span>
-                        </td>
-
-                        <td><input type="number" value="3" class="quantity"></td>
-
-                        <td><span class="table__subtotal">$330</span></td>
-
-                        <td><i class="fi fi-rs-trash table__trash"></i></td>
-
-                    </tr>
                 </table>
             </div>
 
             <div class="cart__actions">
-                <a href="" class="btn flex btn--md">
+                <a onclick="updateCart()" class="btn flex btn--md">
                     <i class="fi fi-rs-refresh"></i> Update Cart
                 </a>
 
@@ -147,10 +83,10 @@
 
                         <form action="" class="coupon__form form grid">
                             <div class="form__group grid">
-                                <input type="text" name="" class="form__input" placeholder="Enter Your Coupon" />
+                                <input id="coupon-code" type="text" name="" class="form__input" placeholder="Enter Your Coupon" />
 
                                 <div class="form__btn">
-                                    <button class="btn flex btn--sm">
+                                    <button onclick="applyCoupon(event)" class="btn flex btn--sm">
                                     <i class="fi-rs-label"></i> Apply
                                   </button>
                                 </div>
@@ -165,26 +101,32 @@
                     <table class="cart__total-table">
                         <tr>
                             <td><span class="cart__total-title">Cart Subtotal</span></td>
-                            <td><span class="cart__total-price">$330</span></td>
+                            <td><span id="cart-subtotal" class="cart__total-price">0 VNĐ</span></td>
                         </tr>
 
                         <tr>
-                            <td><span class="cart__total-title">VAT (10%)</span></td>
-                            <td><span class="cart__total-price">$33</span></td>
+                            <td><span class="cart__total-title">Discount</span></td>
+                            <td><span id="cart-discount" class="cart__total-price">0 VNĐ</span></td>
                         </tr>
 
                         <tr>
                             <td><span class="cart__total-title">Total</span></td>
-                            <td><span class="cart__total-price">$363</span></td>
+                            <td><span id="cart-total" class="cart__total-price">0 VNĐ</span></td>
                         </tr>
                     </table>
 
-                    <a href="checkout.html" class="btn flex btn--md">
+                    <p onclick="goToCheckOut()" class="btn flex btn--md">
                         <i class="fi fi-rs-box-alt"></i> Proceed To Checkout
-                    </a>
+                    </p>
                 </div>
             </div>
         </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showCartInfo();
+            });
+        </script>
 
 <?php
     include "./inc/footer.php";

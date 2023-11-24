@@ -1,3 +1,15 @@
+<?php
+    include 'lib/session.php';
+    Session::init();
+?>
+
+<?php
+  header("Cache-Control: no-cache, must-revalidate");
+  header("Pragma: no-cache"); 
+  header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); 
+  header("Cache-Control: max-age=2592000");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +29,7 @@
     <title>Ecommerce Website</title>
 </head>
 
-<body>
+<body onload="loadCart()">
     <!--=============== HEADER ===============-->
     <header class="header">
         <div class="header__top">
@@ -29,11 +41,19 @@
                 </div>
 
                 <p class="header__alert-news">
-                    Ngập tràn ưu đãi - Tiết kiệm với nhiều mã giảm hấp dẫn
+                    Ngập tràn ưu đãi - Tiết kiệm với nhiều mã giảm hấp dẫn!
                 </p>
 
                 <div class="header__top-action">
-                    <a href="./../login-register.php">Đăng ký/Đăng nhập</a>
+
+                <?php 
+                    $login_check = Session::get('customer_login');
+                    if(!$login_check) {
+                        echo '<a href="./../login.php">Đăng ký/Đăng nhập</a>';
+                    } else {
+                        echo '<p>Người dùng: '.Session::get("customer_name").'</p>';
+                    }
+                ?>
                 </div>
             </div>
         </div>

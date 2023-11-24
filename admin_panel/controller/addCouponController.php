@@ -8,6 +8,7 @@
         $cpdesc = $_POST['cpdesc'];
         $discount = $_POST['discount'];
         $exdate = $_POST['exdate'];
+
         $date = date('Y/m/d', strtotime($exdate));
         
         $check_code = "SELECT * FROM tbl_coupon WHERE couponCode = '$cpcode' LIMIT 1";

@@ -3,6 +3,10 @@
     include "./inc/navigationbar.php";
 ?>
 
+<?php
+        include_once './classes/cls_select_province.php';
+?>
+
     <!--=============== MAIN ===============-->
     <main class="main">
         <!--=============== BREADCRUMB ===============-->
@@ -26,119 +30,153 @@
             </ul>
         </section>
 
-        <!--=============== CHECKOUT ===============-->
+        <!--=============== THANH TOÁN ===============-->
         <section class="checkout section--lg">
             <div class="checkout__container container grid">
+
+            <?php
+                $cusid = 0;
+            ?>
+            <!--================= CÓ TÀI KHOẢN ====================-->
+
+            <?php
+                $login_check = Session::get('customer_login');
+                if($login_check) {
+
+                    include_once './classes/cls_customer.php';
+
+                    $cusid = Session::get("customer_id");
+                        $cus = new customer();
+                        $cuslist = $cus->show_customer_by_id($cusid);
+                        if($cuslist) {
+                            $result_cus_list = $cuslist->fetch_assoc();
+                            $address = $result_cus_list['cusAddress'];
+            ?>
+
                 <div class="checkout__group">
-                    <h3 class="section__title">Billing Details</h3>
+                    <h3 class="section__title">Thông tin giao hàng</h3>
 
                     <form action="" class="form grid">
-                        <input type="text" placeholder="Name" class="form__input">
+                        <input type="text" disabled value="<?=$result_cus_list['cusLastname'];?>" class="form__input">
 
-                        <input type="text" placeholder="Address" class="form__input">
+                        <input type="text" disabled value="<?=$result_cus_list['cusFirstname'];?>" class="form__input">
 
-                        <input type="text" placeholder="City" class="form__input">
+                        <input id="cus_address_ship" type="text" disabled value="<?=$result_cus_list['cusAddress'];?>" class="form__input">
 
-                        <input type="text" placeholder="District" class="form__input">
+                        <input id="cus_phone_ship" type="text" disabled value="<?=$result_cus_list['cusPhone'];?>" class="form__input">
 
-                        <input type="text" placeholder="Ward" class="form__input">
+                        <h3 class="checkout__title">Ghi chú</h3>
 
-                        <input type="text" placeholder="Phone" class="form__input">
-
-                        <input type="email" placeholder="Email" class="form__input">
-
-                        <h3 class="checkout__title">Additional Information</h3>
-
-                        <textarea name="" placeholder="Order note" id="" cols="30" rows="10" class="form__input textarea"></textarea>
+                        <textarea name="" placeholder="Ghi chú cho đơn hàng" id="" cols="30" rows="10" class="form__input textarea"></textarea>
                     </form>
                 </div>
 
+            <?php
+                        }
+                    } else {
+            ?>
+
+            <!--================= KHÔNG CÓ TÀI KHOẢN ====================-->
                 <div class="checkout__group">
-                    <h3 class="section__title">Cart Totals</h3>
+                    <h3 class="section__title">Thông tin giao hàng</h3>
+
+                    <form action="" class="form grid">
+                        <input id="or-lastname" type="text" placeholder="Họ" class="form__input">
+
+                        <input id="or-firstname" type="text" placeholder="Tên" class="form__input">
+
+                        <input id="sub-address" type="text" placeholder="Địa chỉ (Số nhà, Đường...)" class="form__input">
+                        
+                        <select id="province" class="form__input" onchange="selectDistrict()">
+                            <option disabled selected>Chọn Thành phố / Tỉnh</option>
+
+                            <?php
+                                $province = new province();
+                                $prvlist = $province->show_province();
+                                if ($prvlist) {
+                                    while($resultprv = $prvlist->fetch_assoc()) {
+                            ?>
+
+                            <option value="<?=$resultprv['provinceId']?>"><?=$resultprv['provinceName']?></option>
+
+                            <?php
+                                    }
+                                }
+                            ?>
+
+                        </select>
+
+                        <select id="district" class="form__input" onclick="selectWard()">
+                            <option disabled selected>Chọn Quận / Huyện</option>
+
+                        </select>
+
+                        <select id="ward" class="form__input">
+                            <option disabled selected>Chọn Phường / Xã</option>
+
+                        </select>
+
+                        <input id="or-phone" type="text" placeholder="Số điện thoại" class="form__input">
+
+                        <input id="or-email" type="email" placeholder="Email" class="form__input">
+
+                        <h3 class="checkout__title">Ghi chú</h3>
+
+                        <textarea name="" placeholder="Ghi chú cho đơn hàng" id="" cols="30" rows="10" class="form__input textarea"></textarea>
+                    </form>
+                </div>
+
+            <?php
+                }
+            ?>
+
+                <dix class="checkout__group">
+                    <h3 class="section__title">Thông tin đơn hàng</h3>
 
                     <table class="order__table">
                         <tr>
-                            <th colspan="2">Products</th>
-                            <th>Total</th>
+                            <th colspan="2">Sản phẩm</th>
+                            <th>Tổng giá</th>
                         </tr>
 
-                        <tr>
-                            <td><img src="./assets/img/product-1-2.jpg" alt="" class="order__img"></td>
+                        <tbody id="product-info">
 
-                            <td>
-                                <h3 class="table__title">Yidarton Women Summer Blue</h3>
-                                <p class="table__quantity">x 2</p>
-                            </td>
+                        </tbody>
 
-                            <td>
-                                <span class="table__price">$180.00</span>
-                            </td>
-                        </tr>
+                        <tbody id="total-info">
 
-                        <tr>
-                            <td><img src="./assets/img/product-10-2.jpg" alt="" class="order__img"></td>
+                        </tbody>
 
-                            <td>
-                                <h3 class="table__title">Women Summer Hot Yellow</h3>
-                                <p class="table__quantity">x 1</p>
-                            </td>
-
-                            <td>
-                                <span class="table__price">$140.00</span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><img src="./assets/img/product-9-2.jpg" alt="" class="order__img"></td>
-
-                            <td>
-                                <h3 class="table__title">LDB MOON Woman Summer</h3>
-                                <p class="table__quantity">x 2</p>
-                            </td>
-
-                            <td>
-                                <span class="table__price">$80.00</span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><span class="order__subtitle">Subtotal</span></td>
-                            <td colspan="2"><span class="table__price">$280.00</span></td>
-                        </tr>
-
-                        <tr>
-                            <td><span class="order__subtitle">Shipping</span></td>
-                            <td colspan="2"><span class="table__price">Free Shipping</span></td>
-                        </tr>
-
-                        <tr>
-                            <td><span class="order__subtitle">Total</span></td>
-                            <td colspan="2"><span class="order__grand-total">$280.00</span></td>
-                        </tr>
                     </table>
                     <div class="payment__methods">
-                        <h3 class="checkout__title payment__title">Payment</h3>
+                        <h3 class="checkout__title payment__title">Phương thức thanh toán</h3>
 
                         <div class="payment__option flex">
-                            <input type="radio" name="radio" checked class="payment__input">
-                            <label for="" class="payment__label">Direct Bank Transfer</label>
+                            <input type="radio" id="direct" value="Direct" name="payment" checked class="payment__input">
+                            <label for="direct" class="payment__label">Thanh toán khi nhận hàng</label>
                         </div>
 
                         <div class="payment__option flex">
-                            <input type="radio" name="radio" class="payment__input">
-                            <label for="" class="payment__label">Check Payment</label>
+                            <input type="radio" id="bank" value="Bank" name="payment" class="payment__input">
+                            <label for="bank" class="payment__label">Chuyển khoản</label>
                         </div>
 
                         <div class="payment__option flex">
-                            <input type="radio" name="radio" class="payment__input">
-                            <label for="" class="payment__label">Paypal</label>
+                            <input type="radio" id="paypal" value="MoMo" name="payment" class="payment__input">
+                            <label for="paypal" class="payment__label">MoMo</label>
                         </div>
                     </div>
 
-                    <input type="submit" value="Place Order" class="btn btn--md">
+                    <input type="button" onclick="confirmCheckOut(<?=$cusid?>)" value="Đặt hàng" class="btn btn--md">
                 </div>
             </div>
         </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                showCheckOutInfo();
+            });
+        </script>
 
 <?php
     include "./inc/footer.php";

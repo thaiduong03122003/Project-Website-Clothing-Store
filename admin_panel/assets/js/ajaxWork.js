@@ -470,7 +470,7 @@ function customerDelete(id, firstname, lastname) {
                 method: "post",
                 data: { record: id },
                 success: function(data) {
-                    alert(data);
+
                     toast('Xóa tài khoản của ' + firstname + ' ' + lastname + ' thành công!');
                     $('form').trigger('reset');
                     goToSection('viewCustomers.php');
