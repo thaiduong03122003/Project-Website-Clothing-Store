@@ -44,6 +44,15 @@
             return $result;
         }
 
+        public function show_products_16() {
+            $query = "SELECT pd.*, ct.catName, br.brandName FROM tbl_product pd 
+                      LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
+                      LEFT JOIN tbl_brand br ON pd.brandId = br.brandId
+                      ORDER BY pd.pdId DESC LIMIT 16";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
         public function show_products_by_name($pdname) {
             $query = "SELECT pd.*, ct.catName, br.brandName FROM tbl_product pd 
                       LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
@@ -54,8 +63,21 @@
             return $result;
         }
 
-        public function show_product_by_id ($id) {
-            $query ="SELECT * FROM tbl_product WHERE pdId = '$id'";
+        public function show_products_by_catid($catid) {
+            $query = "SELECT pd.*, ct.catName, br.brandName FROM tbl_product pd 
+                      LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
+                      LEFT JOIN tbl_brand br ON pd.brandId = br.brandId
+                      WHERE pd.catId = '$catid'
+                      ORDER BY pd.pdId DESC LIMIT 4";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+        public function show_product_by_id($id) {
+            $query = "SELECT pd.*, ct.catName, br.brandName FROM tbl_product pd 
+                      LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
+                      LEFT JOIN tbl_brand br ON pd.brandId = br.brandId
+                      WHERE pdId = '$id'";
             $result = $this->db->select($query);
             return $result;
         }

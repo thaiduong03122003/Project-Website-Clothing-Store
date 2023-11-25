@@ -46,7 +46,7 @@
         <a href="#sizes" onclick="goToSection('viewSizes.php')" class="menu_btn"><i class="fa fa-tasks"></i> Sizes</a>  
         <a href="#products" onclick="goToSection('viewProducts.php')" class="menu_btn"><i class="fa fa-th"></i> Products</a>
         <a href="#productsizes" onclick="goToSection('viewProductSizes.php')" class="menu_btn"><i class="fa fa-th-list"></i> Product Sizes</a>  
-        <a href="#orders" onclick="goToSection('viewAllOrders.php')" class="menu_btn"><i class="fa fa-shopping-bag"></i> Orders</a>
+        <a href="#orders" onclick="goToSection('viewOrders.php')" class="menu_btn"><i class="fa fa-shopping-bag"></i> Orders</a>
         <a href="#orders" onclick="goToSection('viewCoupons.php')" class="menu_btn"><i class="fa fa-ticket"></i> Coupons</a>
     </div>
   <!---->

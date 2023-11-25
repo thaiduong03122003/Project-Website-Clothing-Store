@@ -13,7 +13,6 @@ document.getElementById('returnTop').addEventListener('click', () => {
 });
 
 
-
 /*=============== HIỆN MENU KHI RESPONSIVE ===============*/
 const navMenu = document.getElementById('nav-menu'),
     navOverlay = document.getElementById('nav-overlay'),
@@ -533,6 +532,10 @@ function confirmCheckOut(id) {
         var firstname = $("#or-firstname").val();
         var sub_address = $("#sub-address").val();
         var total = $("#sumTotal").text();
+        if (!total) {
+            alert("Bạn hãy mua hàng rồi mới được thanh toán!");
+            return false;
+        }
 
         var province = $("#province option:selected").text();
         var district = $("#district option:selected").text();
@@ -590,8 +593,49 @@ function confirmCheckOut(id) {
             });
 
         }
+
     } else {
-        alert('Hello người cũ!');
+        var address_ship = $("#cus_address_ship").val();
+        var phone_ship = $("#cus_phone_ship").val();
+        var order_total = $("#sumTotal").text();
+        var payment_method = $("input[name='payment']:checked").val();
+
+        if (!order_total) {
+            alert('Bạn hãy mua hàng rồi mới thanh toán nha!');
+            return false;
+
+        } else if (address_ship == '' || phone_ship == '') {
+            toast('Vui lòng nhập đầy đủ các thông tin giao hàng!', 'error');
+
+        } else {
+            var fd = new FormData();
+            fd.append('address_ship', address_ship);
+            fd.append('phone_ship', phone_ship);
+            fd.append('order_total', order_total);
+            fd.append('payment_method', payment_method);
+            fd.append('id', id);
+
+            $.ajax({
+                url: './cus_controller/addAccOrder.php',
+                method: 'post',
+                data: fd,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (data.trim() == 'unsuccessful') {
+                        toast('Đặt hàng thất bại, lỗi hệ thống!', 'error', '4000');
+
+                    } else {
+                        data = parseInt(data);
+                        insertPdToODetails(data, function() {
+                            localStorage.clear();
+                            window.location.href = '/thankyou.php';
+                        });
+                    }
+                }
+            });
+
+        }
     }
 }
 
@@ -633,7 +677,9 @@ function insertPdToODetails(id, callback, index = 0) {
 
 
 
-/*=============== XEM ẢNH MÔ TẢ SẢN PHẨM ===============*/
+/*=============== TƯƠNG TÁC VỚI CHI TIẾT SẢN PHẨM ===============*/
+
+/*===== Xem ảnh mô tả sản phẩm =====*/
 function imgGallery() {
     const mainImg = document.querySelector('.details__img'),
         smallImg = document.querySelectorAll('.details__small-img');
@@ -648,7 +694,41 @@ function imgGallery() {
 imgGallery();
 
 
+/*===== Chọn size sản phẩm =====*/
+function changeSize(element) {
+    var allSizes = document.querySelectorAll('.size__link');
 
+    allSizes.forEach(function(size) {
+        size.classList.remove('size-active');
+    });
+
+    element.classList.add('size-active');
+}
+
+
+function addPdtoCart(title, price) {
+
+    if ($(".size__link").hasClass("size-active")) {
+        var psId = $(".size__link.size-active").val();
+        var size = $(".size__link.size-active").text();
+        var pdImg = $("#pd-img").attr('src');
+        var quantityElement = $(".size__link.size-active").siblings('.product_size_quantity');
+        var quantity = quantityElement.text().trim();
+
+        addProductToCart(psId, title, price, pdImg, size, quantity);
+        updateTotal();
+    } else {
+        alert("Vui lòng chọn size trước khi thêm vào giỏ hàng.");
+    }
+}
+
+
+
+/*=============== TÌM KIẾM SẢN PHẨM ===============*/
+function searchItem() {
+    var search = $("#search-input").val();
+    window.location.href = '/search.php?name=' + search;
+}
 
 /*=============== SỬ DỤNG SWIPER CHO DANH MỤC SẢN PHẨM ===============*/
 var swiperCategories = new Swiper(".categories__container", {

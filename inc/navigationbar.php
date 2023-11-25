@@ -45,9 +45,9 @@
                 </ul>
 
                 <div class="header__search">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm..." class="form__input" />
+                    <input id = "search-input" type="text" placeholder="Tìm kiếm sản phẩm..." class="form__input" />
 
-                    <button class="search__btn">
+                    <button onclick="searchItem()" class="search__btn">
                       <img src="./assets/img/search.png" alt=""/>
                     </button>
                 </div>

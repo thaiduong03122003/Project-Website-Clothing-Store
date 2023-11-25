@@ -28,8 +28,13 @@
             return $result;
         }
 
-    
+        public function show_orders_with_name() {
+            $query ="SELECT od.*, cus.cusFirstname, cus.cusLastname FROM tbl_order od 
+                    INNER JOIN tbl_customer cus ON od.cusId = cus.cusId
+                    ORDER BY od.orderId DESC";
+            $result = $this->db->select($query);
+            return $result;
+        }
        
-        
     }
 ?>

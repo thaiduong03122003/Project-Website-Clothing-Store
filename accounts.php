@@ -74,35 +74,46 @@
                         <div class="tab__body">
                             <table class="placed__order-table">
                                 <tr>
-                                    <th>Orders</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Total</th>
-                                    <th>Actions</th>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Thời gian</th>
+                                    <th>Trạng thái</th>
+                                    <th>Tổng giá</th>
+                                    <th>Hành động</th>
                                 </tr>
 
-                                <tr>
-                                    <td>#1357</td>
-                                    <td>March 15, 2023 12:40</td>
-                                    <td>Processing</td>
-                                    <td>$125.00</td>
-                                    <td><a href="" class="view__order">View</a></td>
-                                </tr>
+                            <?php
+                                $cusid = Session::get("customer_id");
+
+                                include_once './classes/cls_order.php';
+
+                                $or = new order();
+
+                                $orlist = $or->show_orders_by_cusId($cusid);
+                                if($orlist) {
+                                    while ($result_or_list = $orlist->fetch_assoc()) {
+                            ?>
 
                                 <tr>
-                                    <td>#1472</td>
-                                    <td>April 15, 2023 21:53</td>
-                                    <td>Completed</td>
-                                    <td>$200.00</td>
-                                    <td><a href="" class="view__order">View</a></td>
+                                    <td>#<?=$result_or_list['orderId']?></td>
+                                    <td><?=$result_or_list['orderDate']?></td>
+                                    <td>
+                                        <?php
+                                            if ($result_or_list['orderStatus'] == '0') {
+                                                echo 'Đang xử lý';
+                                            } else {
+                                                echo 'Đã hoàn tất';
+                                            }
+                                        ?>
+                                        
+                                    </td>
+                                    <td><?=$result_or_list['orderTotalPrice']?></td>
+                                    <td><a href="" class="view__order">Xem đơn hàng</a></td>
                                 </tr>
-                                <tr>
-                                    <td>#1984</td>
-                                    <td>August 6, 2023 17:21</td>
-                                    <td>Completed</td>
-                                    <td>$130.00</td>
-                                    <td><a href="" class="view__order">View</a></td>
-                                </tr>
+
+                            <?php
+                                    }
+                                }
+                            ?>
                             </table>
                         </div>
                     </div>
@@ -116,7 +127,6 @@
                                 <?php
                                     include_once './classes/cls_customer.php';
 
-                                    $cusid = Session::get("customer_id");
                                     $cus = new customer();
                                     $cuslist = $cus->show_customer_by_id($cusid);
                                     if($cuslist) {

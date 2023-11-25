@@ -116,6 +116,10 @@ input {
     outline: none;
 }
 
+button {
+    cursor: pointer;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -1092,6 +1096,12 @@ cartside-section {
     display: flex;
     column-gap: .625rem;
     margin-top: 2.75rem;
+    justify-content: center;
+}
+
+.pagi-top button,
+.pagi-bot button {
+    width: 100px;
 }
 
 .pagination__link {
@@ -1113,7 +1123,12 @@ cartside-section {
     color: var(--body-color);
 }
 
-.pagination__link.icon {
+.pagination__link.icon-left {
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.pagination__link.icon-right {
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
 }

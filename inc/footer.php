@@ -2,13 +2,13 @@
          <section class="newsletter section">
             <div class="newsletter__container container grid">
                 <h3 class="newsletter__title flex">
-                    <img src="./assets/img/icon-email.svg" alt="" class="newsletter__icon" /> Sign up to Newsletter
+                    <img src="./assets/img/icon-email.svg" alt="" class="newsletter__icon" /> Đăng ký để nhận thông tin mới nhất của chúng tôi
                 </h3>
 
-                <p class="newsletter__description">... and receive $25 coupon for first shopping</p>
+                <p class="newsletter__description">... và nhận mã giảm giá lên đến 25% cho đơn hàng đầu tiên</p>
 
                 <form action="" class="newsletter__form">
-                    <input type="text" placeholder="Enter your email" class="newsletter__input">
+                    <input type="text" placeholder="Nhập email của bạn" class="newsletter__input">
                     <input type="submit" class="newsletter__input-btn" value="Subscribe">
                 </form>
             </div>
@@ -23,16 +23,16 @@
                     <img src="./assets/img/logo.svg" alt="" class="footer__logo-img">
                 </a>
 
-                <h4 class="footer__subtitle">Contact</h4>
+                <h4 class="footer__subtitle">Liên hệ</h4>
 
-                <p class="footer__description"><span>Address:</span> HCM City</p>
+                <p class="footer__description"><span>Địa chỉ:</span> HCM City</p>
 
-                <p class="footer__description"><span>Phone:</span>(+81) 342 946 241</p>
+                <p class="footer__description"><span>SĐT:</span>(+81) 342 946 241</p>
 
-                <p class="footer__description"><span>Hours:</span> 8:00 - 21:00, Mon - Sat</p>
+                <p class="footer__description"><span>Thời gian hoạt động:</span> 8:00 - 21:00, Mon - Sat</p>
 
                 <div class="footer__social">
-                    <h4 class="footer__subtitle">Follow Me</h4>
+                    <h4 class="footer__subtitle">Theo dõi chúng tôi tại</h4>
 
                     <div class="footer__social-links flex">
                         <a href="">
@@ -62,25 +62,24 @@
                 <h3 class="footer__title">Address</h3>
 
                 <ul class="footer__links">
-                    <li><a href="" class="footer__link">About Us</a></li>
-                    <li><a href="" class="footer__link">Delivery Infomation</a></li>
-                    <li><a href="" class="footer__link">Privacy Policy</a></li>
-                    <li><a href="" class="footer__link">Terms & Conditions</a></li>
-                    <li><a href="" class="footer__link">Contact Us</a></li>
-                    <li><a href="" class="footer__link">Support Center</a></li>
+                    <li><a href="" class="footer__link">Về chúng tôi</a></li>
+                    <li><a href="" class="footer__link">Thông tin vận chuyển</a></li>
+                    <li><a href="" class="footer__link">Chính sách</a></li>
+                    <li><a href="" class="footer__link">Điều khoản</a></li>
+                    <li><a href="" class="footer__link">Liên hệ</a></li>
+                    <li><a href="" class="footer__link">Trung tâm hỗ trợ</a></li>
                 </ul>
             </div>
 
             <div class="footer__content">
-                <h3 class="footer__title">My Account</h3>
+                <h3 class="footer__title">Tài khoản</h3>
 
                 <ul class="footer__links">
-                    <li><a href="" class="footer__link">Sign In</a></li>
-                    <li><a href="" class="footer__link">View Cart</a></li>
-                    <li><a href="" class="footer__link">My Wishlist</a></li>
-                    <li><a href="" class="footer__link">Track My Order</a></li>
-                    <li><a href="" class="footer__link">Help</a></li>
-                    <li><a href="" class="footer__link">Order</a></li>
+                    <li><a href="" class="footer__link">Quên mật khẩu?</a></li>
+                    <li><a href="cart.php" class="footer__link">Xem giỏ hàng</a></li>
+                    <li><a href="" class="footer__link">Yêu thích</a></li>
+                    <li><a href="" class="footer__link">Trợ giúp</a></li>
+                    <li><a href="" class="footer__link">Đơn hàng</a></li>
                 </ul>
             </div>
 
@@ -92,7 +91,7 @@
         </div>
         <div class="footer__bottom">
             <p class="copyrignt">&copy; 2023 Evara. All rights resered</p>
-            <span class="designer">Designed by Group 15</span>
+            <span class="designer">Designed by Evara Designer Team</span>
         </div>
     </footer>
 

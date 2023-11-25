@@ -12,20 +12,20 @@
         <!--=============== BREADCRUMB ===============-->
         <section class="breadcrumb">
             <ul class="breadcrumb__list flex container">
-                <li><a href="index.html" class="breadcrumb__link">Home</a></li>
+                <li><a href="index.php" class="breadcrumb__link">Trang chủ</a></li>
                 <li>
                     <span class="breadcrumb__link">></span>
                 </li>
-                <li><a href="shop.html" class="breadcrumb__link">Shop</a></li>
+                <li><a href="shop.php" class="breadcrumb__link">Sản phẩm</a></li>
                 <li>
                     <span class="breadcrumb__link">></span>
                 </li>
-                <li><a href="cart.html" class="breadcrumb__link">Cart</a></li>
+                <li><a href="cart.php" class="breadcrumb__link">Giỏ hàng</a></li>
                 <li>
                     <span class="breadcrumb__link">></span>
                 </li>
                 <li>
-                    <span class="breadcrumb__link">Checkout</span>
+                    <span class="breadcrumb__link">Thanh toán</span>
                 </li>
             </ul>
         </section>
@@ -61,9 +61,9 @@
 
                         <input type="text" disabled value="<?=$result_cus_list['cusFirstname'];?>" class="form__input">
 
-                        <input id="cus_address_ship" type="text" disabled value="<?=$result_cus_list['cusAddress'];?>" class="form__input">
+                        <input id="cus_address_ship" type="text" value="<?=$result_cus_list['cusAddress'];?>" class="form__input">
 
-                        <input id="cus_phone_ship" type="text" disabled value="<?=$result_cus_list['cusPhone'];?>" class="form__input">
+                        <input id="cus_phone_ship" type="text" value="<?=$result_cus_list['cusPhone'];?>" class="form__input">
 
                         <h3 class="checkout__title">Ghi chú</h3>
 

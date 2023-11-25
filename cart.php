@@ -8,16 +8,16 @@
         <!--=============== BREADCRUMB ===============-->
         <section class="breadcrumb">
             <ul class="breadcrumb__list flex container">
-                <li><a href="index.html" class="breadcrumb__link">Home</a></li>
+                <li><a href="index.php" class="breadcrumb__link">Trang chủ</a></li>
                 <li>
                     <span class="breadcrumb__link">></span>
                 </li>
-                <li><a href="shop.html" class="breadcrumb__link">Shop</a></li>
+                <li><a href="shop.php" class="breadcrumb__link">Sản phẩm</a></li>
                 <li>
                     <span class="breadcrumb__link">></span>
                 </li>
                 <li>
-                    <span class="breadcrumb__link">Cart</span>
+                    <span class="breadcrumb__link">Giỏ hàng</span>
                 </li>
             </ul>
         </section>
@@ -27,12 +27,12 @@
             <div class="table__container">
                 <table class="table">
                     <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Subtotal</th>
-                        <th>Remove</th>
+                        <th>Ảnh</th>
+                        <th>Tên</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Tổng giá</th>
+                        <th>Xóa</th>
                     </tr>
 
                     <tbody id="cart__info">
@@ -44,11 +44,11 @@
 
             <div class="cart__actions">
                 <a onclick="updateCart()" class="btn flex btn--md">
-                    <i class="fi fi-rs-refresh"></i> Update Cart
+                    <i class="fi fi-rs-refresh"></i> Cập nhật giỏ hàng
                 </a>
 
-                <a href="" class="btn flex btn--md">
-                    <i class="fi-rs-shopping-bag"></i> Continue Shopping
+                <a href="shop.php" class="btn flex btn--md">
+                    <i class="fi-rs-shopping-bag"></i> Tiếp tục mua sắm
                 </a>
             </div>
 
@@ -59,7 +59,7 @@
             <div class="cart__group grid">
                 <div>
                     <div class="cart__shipping">
-                        <h3 class="selection__title">Calculate Shipping</h3>
+                        <h3 class="selection__title">Tính phí vận chuyển</h3>
 
                         <form action="" class="form grid">
                             <input type="text" placeholder="City / Province" class="form__input">
@@ -72,22 +72,22 @@
 
                             <div class="form__btn">
                                 <button class="btn flex btn--sm">
-                                  <i class="fi fi-rs-check"></i> Confirm
+                                  <i class="fi fi-rs-check"></i> Xác nhận
                               </button>
                             </div>
                         </form>
                     </div>
 
                     <div class="cart__coupon">
-                        <h3 class="section__title">Apply Coupon</h3>
+                        <h3 class="section__title">Áp dụng mã giảm giá</h3>
 
                         <form action="" class="coupon__form form grid">
                             <div class="form__group grid">
-                                <input id="coupon-code" type="text" name="" class="form__input" placeholder="Enter Your Coupon" />
+                                <input id="coupon-code" type="text" name="" class="form__input" placeholder="Nhập mã giảm giá" />
 
                                 <div class="form__btn">
                                     <button onclick="applyCoupon(event)" class="btn flex btn--sm">
-                                    <i class="fi-rs-label"></i> Apply
+                                    <i class="fi-rs-label"></i> Áp dụng
                                   </button>
                                 </div>
                             </div>
@@ -96,27 +96,27 @@
                 </div>
 
                 <div class="cart__total">
-                    <h3 class="section__title">Cart Totals</h3>
+                    <h3 class="section__title">Tổng giá trong giỏ hàng</h3>
 
                     <table class="cart__total-table">
                         <tr>
-                            <td><span class="cart__total-title">Cart Subtotal</span></td>
+                            <td><span class="cart__total-title">Giá tiền</span></td>
                             <td><span id="cart-subtotal" class="cart__total-price">0 VNĐ</span></td>
                         </tr>
 
                         <tr>
-                            <td><span class="cart__total-title">Discount</span></td>
+                            <td><span class="cart__total-title">Giảm giá</span></td>
                             <td><span id="cart-discount" class="cart__total-price">0 VNĐ</span></td>
                         </tr>
 
                         <tr>
-                            <td><span class="cart__total-title">Total</span></td>
+                            <td><span class="cart__total-title">Thành tiền</span></td>
                             <td><span id="cart-total" class="cart__total-price">0 VNĐ</span></td>
                         </tr>
                     </table>
 
                     <p onclick="goToCheckOut()" class="btn flex btn--md">
-                        <i class="fi fi-rs-box-alt"></i> Proceed To Checkout
+                        <i class="fi fi-rs-box-alt"></i> Đi đến thanh toán
                     </p>
                 </div>
             </div>

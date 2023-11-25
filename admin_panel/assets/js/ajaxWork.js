@@ -143,9 +143,9 @@ function ChangeOrderStatus(id) {
         method: "post",
         data: { record: id },
         success: function(data) {
-            alert('Order Status updated successfully');
+            toast('Thay đổi trang thái đơn hàng thành công!');
             $('form').trigger('reset');
-            showOrders();
+            goToSection('viewOrders.php');
         }
     });
 }
@@ -156,9 +156,9 @@ function ChangePay(id) {
         method: "post",
         data: { record: id },
         success: function(data) {
-            alert('Payment Status updated successfully');
+            toast('Thay đổi trang thái thanh toán thành công!');
             $('form').trigger('reset');
-            showOrders();
+            goToSection('viewOrders.php');
         }
     });
 }
@@ -583,32 +583,16 @@ function couponDelete(id, name) {
     });
 }
 
-
-
-//delete cart data
-function cartDelete(id) {
-    $.ajax({
-        url: "./controller/deleteCartController.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            alert('Cart Item Successfully deleted');
-            $('form').trigger('reset');
-            showMyCart();
-        }
-    });
-}
-
-function eachDetailsForm(id) {
-    $.ajax({
-        url: "./view/viewEachDetails.php",
-        method: "post",
-        data: { record: id },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
+// function eachDetailsForm(id) {
+//     $.ajax({
+//         url: "./view/viewEachDetails.php",
+//         method: "post",
+//         data: { record: id },
+//         success: function(data) {
+//             $('.allContent-section').html(data);
+//         }
+//     });
+// }
 
 function staffEditForm(id) {
     $.ajax({

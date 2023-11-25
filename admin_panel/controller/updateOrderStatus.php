@@ -1,31 +1,22 @@
 <?php
 
-    include_once "../config/dbconnect.php";
-   
-    $order_id=$_POST['record'];
-    //echo $order_id;
-    $sql = "SELECT order_status from orders where order_id='$order_id'"; 
-    $result=$conn-> query($sql);
-  //  echo $result;
+     include_once '../../lib/database.php';
+     $db = new Database();
 
-    $row=$result-> fetch_assoc();
+     $order_id = $_POST['record'];
+
+     $sql = "SELECT orderStatus FROM tbl_order WHERE orderId = '$order_id'"; 
+     $result = $db->select($sql);
+
+     $row = $result->fetch_assoc();
     
-   // echo $row["pay_status"];
-    
-    if($row["order_status"]==0){
-         $update = mysqli_query($conn,"UPDATE orders SET order_status=1 where order_id='$order_id'");
-    }
-    else if($row["order_status"]==1){
-         $update = mysqli_query($conn,"UPDATE orders SET order_status=0 where order_id='$order_id'");
-    }
-    
-        
- 
-    // if($update){
-    //     echo"success";
-    // }
-    // else{
-    //     echo"error";
-    // }
+     if($row["orderStatus"] == 0){
+          $update = "UPDATE tbl_order SET orderStatus = 1 WHERE orderId = '$order_id'";
+          $db->update($update);
+     }
+     else if($row["orderStatus"] == 1){
+          $update = "UPDATE tbl_order SET orderStatus = 0 WHERE orderId = '$order_id'";
+          $db->update($update);
+     }
     
 ?>
