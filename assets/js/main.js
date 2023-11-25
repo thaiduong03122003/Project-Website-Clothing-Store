@@ -666,6 +666,7 @@ function insertPdToODetails(id, callback, index = 0) {
             processData: false,
             contentType: false,
             success: function(data) {
+
                 insertPdToODetails(id, callback, index + 1);
             }
         });

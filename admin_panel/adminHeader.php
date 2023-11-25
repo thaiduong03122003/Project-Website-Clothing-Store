@@ -1,7 +1,6 @@
 <?php
    include '../lib/session.php';
    Session::checkSession();
-   include "./config/dbconnect.php";
 ?>
 
 <?php
