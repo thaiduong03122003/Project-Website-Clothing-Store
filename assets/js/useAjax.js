@@ -89,9 +89,12 @@ function loginCheck() {
             method: 'post',
             data: { email: loemail, pass: lopassword },
             success: function(data) {
-                console.log(data);
-                if (data.trim() == 'successful'.trim()) {
+                if (data.trim() == 'locked') {
+                    alert('Tài khoản của bạn đã bị khóa, vui lòng liên hệ nhân viên tư vấn của chúng tôi. SĐT: 0862 842 972 (nv.Staff)');
+
+                } else if (data.trim() == 'successful'.trim()) {
                     window.location.href = '/index.php';
+
                 } else {
                     toast('Đăng nhập thất bại!', 'error', '3000');
                 }

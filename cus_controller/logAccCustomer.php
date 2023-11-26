@@ -15,12 +15,16 @@
         if ($result_check) {
             $value = $result_check->fetch_assoc();
             
-            Session::set('customer_login', true);
-            Session::set('customer_id', $value['cusId']);
-            $fullname = $value['cusFirstname'].' '.$value['cusLastname'];
-            Session::set('customer_name', $fullname);
-            echo 'successful';
-
+            if ($value['accStatus'] == '0') {
+                echo 'locked';
+            } else {
+                Session::set('customer_login', true);
+                Session::set('customer_id', $value['cusId']);
+                $fullname = $value['cusFirstname'].' '.$value['cusLastname'];
+                Session::set('customer_name', $fullname);
+                echo 'successful';
+            }
+            
         } else {
             echo 'unsuccessful';
         }
