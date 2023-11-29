@@ -51,6 +51,13 @@
     color: #ef2e31;
 }
 
+.big_card {
+    position: absolute;
+    right: 50px;
+    bottom: 19px;
+    color: #f0ef2c !important;
+}
+
 
 /************************** for sidebar ***********************************/
 
