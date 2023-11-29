@@ -30,7 +30,7 @@
             </div>
 
             <div class="col-sm-3">
-                <div class="card dashboard_content">
+                <div class="card dashboard_content" onclick="goToSection('customer/viewCustomers.php')">
                     <img src="./assets/images/people.png" class="dashboard_img" alt="">
                     <h4 style="color:white;">Total Customers</h4>
                     <h5>
@@ -55,7 +55,7 @@
             </div>
 
             <div class="col-sm-3">
-                <div class="card dashboard_content">
+                <div class="card dashboard_content" onclick="goToSection('category/viewCategories.php')">
                     <img src="./assets/images/categories.png" class="dashboard_img" alt="">
                     <h4 style="color:white;">Total Categories</h4>
                     <h5>
@@ -80,7 +80,7 @@
             </div>
 
             <div class="col-sm-3">
-                <div class="card dashboard_content">
+                <div class="card dashboard_content" onclick="goToSection('brand/viewBrands.php')">
                     <img src="./assets/images/brand.png" class="dashboard_img" alt="">
                     <h4 style="color:white;">Total Brands</h4>
                     <h5>
@@ -105,7 +105,7 @@
             </div>
             
             <div class="col-sm-3">
-                <div class="card dashboard_content">
+                <div class="card dashboard_content" onclick="goToSection('product/viewProducts.php')">
                     <img src="./assets/images/fashion.png" class="dashboard_img" alt="">
                     <h4 style="color:white;">Total Products</h4>
                     <h5>
@@ -129,7 +129,7 @@
                 </div>
             </div>
             <div class="col-sm-3">
-                <div class="card dashboard_content">
+                <div class="card dashboard_content" onclick="goToSection('order/viewOrders.php')">
                     <img src="./assets/images/package.png" class="dashboard_img" alt="">
                     <h4 style="color:white;">Total orders</h4>
                     <h5>

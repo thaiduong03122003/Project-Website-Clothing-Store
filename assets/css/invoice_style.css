@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #808080;
+}
+
+.wrapper {
+    width: 424px;
+    height: 600px;
+    background-color: #fff;
+    position: relative;
+    padding: 30px 40px;
+}
+
+.invoice_header {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.logo {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    font-weight: 700;
+}
+
+.title {
+    text-transform: uppercase;
+    font-size: 25px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.inv_number,
+.inv_date {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inv_number {
+    padding: 10px 45px 0 0;
+}
+
+.inv_date {
+    padding: 10px 0 0 45px;
+}
+
+.inv_number h3,
+.inv_date h3 {
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.inv_number h4,
+.inv_date h4 {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.billing_detail {
+    margin-top: 15px;
+}
+
+.billing_detail p:nth-child(1),
+.billing_detail p:nth-child(2) {
+    text-transform: uppercase;
+}
+
+.billing_detail p:nth-child(1) {
+    font-size: 10px;
+}
+
+.billing_detail p:nth-child(2) {
+    font-size: 12px;
+    font-weight: 700;
+    width: 150px;
+    border-bottom: 1px solid #000;
+    margin-bottom: 5px;
+}
+
+.billing_detail p:nth-child(3),
+.billing_detail p:nth-child(4),
+.billing_detail p:nth-child(5) {
+    font-size: 12px;
+}
+
+.billing_detail p span {
+    font-weight: 600;
+}
+
+table {
+    border-collapse: collapse;
+    font-size: 12px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+table thead tr td {
+    text-align: center;
+    font-weight: 600;
+    padding: 8px 5px;
+}
+
+table tbody td {
+    padding: 7px 5px;
+    text-align: center;
+}
+
+.l-col {
+    text-align: left;
+}
+
+.r-col {
+    text-align: right;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #fcfcfc;
+    border-bottom: 1px solid #b4b4b4;
+    border-top: 1px solid #b4b4b4;
+}
+
+.total_section {
+    position: absolute;
+    right: 40px;
+    font-size: 12px;
+    width: 160px;
+    margin-top: 5px;
+    padding-right: 5px;
+}
+
+.sub,
+.tax,
+.total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.total {
+    border-top: 1px solid #646464;
+    padding-top: 5px;
+}
+
+.sub p:nth-child(1),
+.tax p:nth-child(1),
+.total p {
+    font-weight: 600;
+}
+
+.payment_terms {
+    position: absolute;
+    bottom: 30px;
+    width: 45%;
+}
+
+.payment_detail {
+    margin-top: 8px;
+}
+
+.payment_detail p:nth-child(1) {
+    font-size: 12px;
+    font-weight: 700;
+    width: 150px;
+}
+
+.payment_detail p:nth-child(2),
+.payment_detail p:nth-child(3),
+.payment_detail p:nth-child(4) {
+    font-size: 10px;
+}
+
+.payemnt-detail p span {
+    font-weight: 600;
+}
+
+.terms p:nth-child(1) {
+    font-size: 12px;
+    font-weight: 700;
+    width: 150px;
+}
+
+.terms {
+    margin-bottom: 20px;
+}
+
+.terms p:nth-child(2) {
+    font-size: 10px;
+}
+
+.message p {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.signature p:nth-child(1) {
+    font-size: 12px;
+    font-weight: 700;
+    position: absolute;
+    right: 40px;
+    bottom: 60px;
+    border-top: 1px solid #262626;
+}
+
+.signature p:nth-child(2) {
+    font-size: 8px;
+    font-weight: 700;
+    position: absolute;
+    right: 40px;
+    bottom: 50px;
+    font-style: italic;
+}

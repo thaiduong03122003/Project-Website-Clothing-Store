@@ -314,7 +314,7 @@
                     </div>
 
                     <div class="review__form">
-                        <h4 class="review__form-title">Add a review</h4>
+                        <h4 class="review__form-title">Viết đánh giá</h4>
 
                         <div class="rate__product">
                             <i class="fi fi-rs-star"></i>
@@ -325,16 +325,16 @@
                         </div>
 
                         <form action="" class="form grid">
-                            <textarea name="" class="form__input textarea" placeholder="Write Comment"></textarea>
+                            <textarea name="" class="form__input textarea" placeholder="Viết đánh giá của bạn"></textarea>
 
                             <div class="form__group grid">
-                                <input type="text" name="" placeholder="Name" class="form__input">
+                                <input type="text" name="" placeholder="Tên" class="form__input">
 
                                 <input type="email" name="" placeholder="Email" class="form__input">
                             </div>
 
                             <div class="form__btn">
-                                <button class="btn">Submit Review</button>
+                                <button class="btn">Gửi</button>
                             </div>
                         </form>
                     </div>

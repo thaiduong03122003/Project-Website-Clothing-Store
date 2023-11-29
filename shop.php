@@ -27,6 +27,14 @@
             ?>
             <p class="total__products">Chúng tôi đang có <span><?=$sumpd?></span> sản phẩm dành cho bạn!</p>
 
+            <div class="sort">
+                <label>Sắp xếp sản phẩm:</label>
+                <select id="sort_option" onchange="fetch_data()">
+                    <option value="default">Mặc định</option>
+                    <option value="asc">Giá tăng dần</option>
+                    <option value="desc">Giá giảm dần</option>
+                </select>
+            </div>
             <div id="get_data"> 
               
                     
@@ -35,16 +43,24 @@
             
         </section>
 
+
+
+    <!-- =============== PHÂN TRANG =============== -->
     <script>
-        function fetch_data(page) {
+        function fetch_data(page = 1) {
+            var sortOp = $('#sort_option').val();
+
             $.ajax({
                 url: "./cus_controller/pagination.php",
                 method: "POST",
                 data: {
-                    page: page
+                    page: page,
+                    sort: sortOp
                 },
                 success: function(data) {
                     $("#get_data").html(data);
+                    ready();
+                    window.location.href = '#';
                 }
             });
         }
@@ -56,6 +72,10 @@
         })
 
     </script>
+
+
+    
+
 <?php
     include "./inc/footer.php";
 

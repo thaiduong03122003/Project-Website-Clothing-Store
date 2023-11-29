@@ -47,7 +47,7 @@
                     $fm = new Format();
                     $ps = new productsize();
 
-                    $pdlist = $pd->show_products_by_name($name); // 1 là Featured
+                    $pdlist = $pd->show_products_by_name($name);
                     if($pdlist) {
                         while ($result_pd_list = $pdlist->fetch_assoc()) {
 

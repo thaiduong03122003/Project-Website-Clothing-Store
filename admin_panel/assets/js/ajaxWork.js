@@ -20,117 +20,18 @@ function showDashboard() {
     });
 }
 
-function showStaff() {
-    $.ajax({
-        url: "./adminView/viewStaff.php",
-        method: "post",
-        data: { record: 1 },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
-
-function showBrands() {
-    $.ajax({
-        url: "./adminView/viewBrands.php",
-        method: "post",
-        data: { record: 1 },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
-
-function showCategories() {
-    $.ajax({
-        url: "./adminView/viewCategories.php",
-        method: "post",
-        data: { record: 1 },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
-
-function showSizes() {
-    $.ajax({
-        url: "./adminView/viewSizes.php",
-        method: "post",
-        data: { record: 1 },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
-
-function showProducts() {
-    $.ajax({
-        url: "./adminView/viewProducts.php",
-        method: "post",
-        data: { record: 1 },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
-
-function showProductSizes() {
-    $.ajax({
-        url: "./adminView/viewProductSizes.php",
-        method: "post",
-        data: { record: 1 },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
-
-function showCustomers() {
-    $.ajax({
-        url: "./adminView/viewCustomers.php",
-        method: "post",
-        data: { record: 1 },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
-
-
-function showOrders() {
-    $.ajax({
-        url: "./adminView/viewAllOrders.php",
-        method: "post",
-        data: { record: 1 },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
-
-function showCoupons() {
-    $.ajax({
-        url: "./adminView/viewCoupons.php",
-        method: "post",
-        data: { record: 1 },
-        success: function(data) {
-            $('.allContent-section').html(data);
-        }
-    });
-}
 
 function changeAccStatus(id, firstname, lastname) {
     Swal.fire(confirmObj('Cảnh báo!', 'Bạn có muốn thay đổi trạng thái của tài khoản của ' + firstname + ' ' + lastname + '?', 'error', 'Đồng ý', 'Hủy')).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "./controller/updateAccStatus.php",
+                url: "./controller/customer_controller/updateAccStatus.php",
                 method: "post",
                 data: { record: id },
                 success: function(data) {
-                    toast('Thay đổi trang thái tài khoản của ' + firstname + ' ' + lastname + ' thành công!', 'success', '4000');
+                    toast('Thay đổi trạng thái tài khoản của ' + firstname + ' ' + lastname + ' thành công!', 'success', '4000');
                     $('form').trigger('reset');
-                    goToSection('viewCustomers.php');
+                    goToSection('customer/viewCustomers.php');
                 }
             });
         }
@@ -139,26 +40,26 @@ function changeAccStatus(id, firstname, lastname) {
 
 function ChangeOrderStatus(id) {
     $.ajax({
-        url: "./controller/updateOrderStatus.php",
+        url: "./controller/order_controller/updateOrderStatus.php",
         method: "post",
         data: { record: id },
         success: function(data) {
-            toast('Thay đổi trang thái đơn hàng thành công!');
+            toast('Thay đổi trạng thái đơn hàng thành công!');
             $('form').trigger('reset');
-            goToSection('viewOrders.php');
+            goToSection('order/viewOrders.php');
         }
     });
 }
 
 function ChangePay(id) {
     $.ajax({
-        url: "./controller/updatePayStatus.php",
+        url: "./controller/order_controller/updatePayStatus.php",
         method: "post",
         data: { record: id },
         success: function(data) {
-            toast('Thay đổi trang thái thanh toán thành công!');
+            toast('Thay đổi trạng thái thanh toán thành công!');
             $('form').trigger('reset');
-            goToSection('viewOrders.php');
+            goToSection('order/viewOrders.php');
         }
     });
 }
@@ -189,7 +90,7 @@ function addStaff(event) {
         fd.append('ad_role', ad_role);
 
         $.ajax({
-            url: "./controller/addStaffController.php",
+            url: "./controller/staff_controller/addStaffController.php",
             method: "post",
             data: fd,
             processData: false,
@@ -205,7 +106,7 @@ function addStaff(event) {
                     $('form').trigger('reset');
                     $('#myModal').modal('hide');
                     $('#myModal').on('hidden.bs.modal', function() {
-                        showStaff();
+                        goToSection('staff/viewStaff.php');
                     });
                 }
             }
@@ -222,7 +123,7 @@ function addBrand(event) {
         return false;
     } else {
         $.ajax({
-            url: "./controller/addBrandController.php",
+            url: "./controller/brand_controller/addBrandController.php",
             method: "post",
             data: { record: br_name },
             success: function(data) {
@@ -231,7 +132,7 @@ function addBrand(event) {
                     $('form').trigger('reset');
                     $('#myModal').modal('hide');
                     $('#myModal').on('hidden.bs.modal', function() {
-                        showBrands();
+                        goToSection('brand/viewBrands.php');
                     });
                 } else {
                     toast('Thương hiệu đã tồn tại!', 'error');
@@ -253,7 +154,7 @@ function addCategory(event) {
         fd.append('record', catname);
         fd.append('file', file);
         $.ajax({
-            url: "./controller/addCategoryController.php",
+            url: "./controller/category_controller/addCategoryController.php",
             method: "post",
             data: fd,
             contentType: false,
@@ -268,7 +169,7 @@ function addCategory(event) {
                     $('form').trigger('reset');
                     $('#myModal').modal('hide');
                     $('#myModal').on('hidden.bs.modal', function() {
-                        showCategories();
+                        goToSection('category/viewCategories.php');
                     });
                 }
             }
@@ -284,7 +185,7 @@ function addSize(event) {
         return false;
     } else {
         $.ajax({
-            url: "./controller/addSizeController.php",
+            url: "./controller/size_controller/addSizeController.php",
             method: "post",
             data: { record: sizename },
             success: function(data) {
@@ -293,7 +194,7 @@ function addSize(event) {
                     $('form').trigger('reset');
                     $('#myModal').modal('hide');
                     $('#myModal').on('hidden.bs.modal', function() {
-                        showSizes();
+                        goToSection('size/viewSizes.php');
                     });
                 } else {
                     toast('Danh mục đã tồn tại!', 'error');
@@ -305,7 +206,7 @@ function addSize(event) {
 
 function productAddForm() {
     $.ajax({
-        url: "./adminView/addProductForm.php",
+        url: "./adminView/product/addProductForm.php",
         method: "post",
         data: { record: 1 },
         success: function(data) {
@@ -347,7 +248,7 @@ function addProduct(event) {
         fd.append('upload', upload);
 
         $.ajax({
-            url: "./controller/addProductController.php",
+            url: "./controller/product_controller/addProductController.php",
             method: "post",
             data: fd,
             processData: false,
@@ -360,7 +261,7 @@ function addProduct(event) {
                 } else {
                     toast('Thêm sản phẩm: ' + data + ' thành công!');
                     $('form').trigger('reset');
-                    showProducts();
+                    goToSection('product/viewProducts.php');
                 }
             }
         });
@@ -377,7 +278,7 @@ function addProductSize(event) {
         return false;
     } else {
         $.ajax({
-            url: "./controller/addPdSizeController.php",
+            url: "./controller/product_size_controller/addPdSizeController.php",
             method: "post",
             data: { record: pdname, sizename: sizename, quantity: quantity },
             success: function(data) {
@@ -386,7 +287,7 @@ function addProductSize(event) {
                     $('form').trigger('reset');
                     $('#myModal').modal('hide');
                     $('#myModal').on('hidden.bs.modal', function() {
-                        showProductSizes();
+                        goToSection('product_size/viewProductSizes.php');
                     });
                 } else {
                     toast('Sản phẩm này đã thiết lập thông tin rồi!', 'error');
@@ -422,7 +323,7 @@ function addCoupon(event) {
             fd.append('exdate', exdate);
 
             $.ajax({
-                url: "./controller/addCouponController.php",
+                url: "./controller/coupon_controller/addCouponController.php",
                 method: "post",
                 data: fd,
                 processData: false,
@@ -433,7 +334,7 @@ function addCoupon(event) {
                         $('form').trigger('reset');
                         $('#myModal').modal('hide');
                         $('#myModal').on('hidden.bs.modal', function() {
-                            showCoupons();
+                            goToSection('viewCoupons.php');
                         });
                     } else {
                         toast('Đã tồn tại mã giảm giá này rồi!', 'error');
@@ -449,13 +350,13 @@ function staffDelete(id, firstname, lastname) {
     Swal.fire(confirmObj('Cảnh báo!', 'Bạn có muốn xóa: ' + firstname + ' ' + lastname + '?', 'error', 'Xóa', 'Hủy')).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "./controller/deleteStaffController.php",
+                url: "./controller/staff_controller/deleteStaffController.php",
                 method: "post",
                 data: { record: id },
                 success: function(data) {
                     toast('Xóa ' + firstname + ' ' + lastname + ' thành công!');
                     $('form').trigger('reset');
-                    showStaff();
+                    goToSection('staff/viewStaff.php');
                 }
             });
         }
@@ -466,14 +367,14 @@ function customerDelete(id, firstname, lastname) {
     Swal.fire(confirmObj('Cảnh báo!', 'Bạn muốn xóa tài khoản của ' + firstname + ' ' + lastname + '?', 'error', 'Xóa', 'Hủy')).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "./controller/deleteCustomerController.php",
+                url: "./controller/customer_controller/deleteCustomerController.php",
                 method: "post",
                 data: { record: id },
                 success: function(data) {
 
                     toast('Xóa tài khoản của ' + firstname + ' ' + lastname + ' thành công!');
                     $('form').trigger('reset');
-                    goToSection('viewCustomers.php');
+                    goToSection('customer/viewCustomers.php');
                 }
             });
         }
@@ -484,13 +385,13 @@ function brandDelete(id, name) {
     Swal.fire(confirmObj('Cảnh báo!', 'Khi bạn xóa thương hiệu ' + name + ', mọi sản phẩm mang thương hiệu này sẽ mang Mã thương hiệu là NULL.', 'error', 'Xóa', 'Hủy')).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "./controller/deleteBrandController.php",
+                url: "./controller/brand_controller/deleteBrandController.php",
                 method: "post",
                 data: { record: id },
                 success: function(data) {
                     toast('Xóa thương hiệu ' + name + ' thành công!');
                     $('form').trigger('reset');
-                    showBrands();
+                    goToSection('brand/viewBrands.php');
                 }
             });
         }
@@ -501,13 +402,13 @@ function categoryDelete(id, name) {
     Swal.fire(confirmObj('Cảnh báo!', 'Khi bạn xóa danh mục ' + name + ', mọi sản phẩm nằm trong danh mục này sẽ mang Mã danh mục là NULL.', 'error', 'Xóa', 'Hủy')).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "./controller/deleteCategoryController.php",
+                url: "./controller/category_controller/deleteCategoryController.php",
                 method: "post",
                 data: { record: id },
                 success: function(data) {
                     toast('Xóa danh mục ' + name + ' thành công!');
                     $('form').trigger('reset');
-                    showCategories();
+                    goToSection('category/viewCategories.php')
                 }
             });
         }
@@ -518,13 +419,13 @@ function sizeDelete(id, name) {
     Swal.fire(confirmObj('Cảnh báo!', 'Nếu bạn xóa Size ' + name + ', các sản phẩm có kích cỡ này sẽ có Mã size là NULL.', 'error', 'Xóa', 'Hủy')).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "./controller/deleteSizeController.php",
+                url: "./controller/size_controller/deleteSizeController.php",
                 method: "post",
                 data: { record: id },
                 success: function(data) {
                     toast('Xóa Size ' + name + ' thành công!');
                     $('form').trigger('reset');
-                    showSizes();
+                    goToSection('size/viewSizes.php');
                 }
             });
         }
@@ -536,13 +437,13 @@ function productDelete(id, name) {
     Swal.fire(confirmObj('Cảnh báo!', 'Khi bạn xóa sản phẩm ' + name + ', nếu nó có trong đơn hàng thì sẽ không thể xác định được Mã sản phẩm nữa.', 'error', 'Xóa', 'Hủy')).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "./controller/deleteProductController.php",
+                url: "./controller/product_controller/deleteProductController.php",
                 method: "post",
                 data: { record: id },
                 success: function(data) {
                     toast('Xóa sản phẩm ' + name + ' thành công! Nhớ xóa cả ảnh trong ./uploads/ luôn nhé', 'success', '8000');
                     $('form').trigger('reset');
-                    showProducts();
+                    goToSection('product/viewProducts.php');
                 }
             });
         }
@@ -553,13 +454,13 @@ function pdSizeDelete(id, name) {
     Swal.fire(confirmObj('Cảnh báo!', 'Nếu bạn xóa thông tin của ' + name + ', nếu nó có trong đơn hàng thì sẽ không thể xác định được thông tin sản phẩm nữa.', 'error', 'Xóa', 'Hủy')).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "./controller/deletePdSizeController.php",
+                url: "./controller/product_size_controller/deletePdSizeController.php",
                 method: "post",
                 data: { record: id },
                 success: function(data) {
                     toast('Xóa thông tin của ' + name + ' thành công!');
                     $('form').trigger('reset');
-                    showProductSizes();
+                    goToSection('product_size/viewProductSizes.php');
                 }
             });
         }
@@ -570,33 +471,22 @@ function couponDelete(id, name) {
     Swal.fire(confirmObj('Cảnh báo!', 'Bạn có chắc muốn xóa mã giảm giá: ' + name + '?', 'error', 'Xóa', 'Hủy')).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "./controller/deleteCouponController.php",
+                url: "./controller/coupon_controller/deleteCouponController.php",
                 method: "post",
                 data: { record: id },
                 success: function(data) {
                     toast('Xóa mã giảm giá: ' + name + ' thành công!');
                     $('form').trigger('reset');
-                    showCoupons();
+                    goToSection('viewCoupons.php');
                 }
             });
         }
     });
 }
 
-// function eachDetailsForm(id) {
-//     $.ajax({
-//         url: "./view/viewEachDetails.php",
-//         method: "post",
-//         data: { record: id },
-//         success: function(data) {
-//             $('.allContent-section').html(data);
-//         }
-//     });
-// }
-
 function staffEditForm(id) {
     $.ajax({
-        url: "./adminView/editStaffForm.php",
+        url: "./adminView/staff/editStaffForm.php",
         method: "post",
         data: { record: id },
         success: function(data) {
@@ -629,7 +519,7 @@ function updateStaff(event) {
     fd.append('role', role);
 
     $.ajax({
-        url: './controller/updateStaffController.php',
+        url: './controller/staff_controller/updateStaffController.php',
         method: 'post',
         data: fd,
         processData: false,
@@ -638,7 +528,7 @@ function updateStaff(event) {
             if (data.trim() != 'unsuccessful'.trim()) {
                 toast('Cập nhật Username: ' + data + ' thành công!');
                 $('form').trigger('reset');
-                showStaff();
+                goToSection('staff/viewStaff.php');
             } else {
                 toast('Username đã tồn tại!', 'error');
             }
@@ -648,7 +538,7 @@ function updateStaff(event) {
 
 function customerEditForm(id) {
     $.ajax({
-        url: "./adminView/editCustomerForm.php",
+        url: "./adminView/customer/editCustomerForm.php",
         method: "post",
         data: { record: id },
         success: function(data) {
@@ -677,7 +567,7 @@ function updateCustomer(event) {
     fd.append('phone', phone);
 
     $.ajax({
-        url: './controller/updateCusController.php',
+        url: './controller/customer_controller/updateCusController.php',
         method: 'post',
         data: fd,
         processData: false,
@@ -686,7 +576,7 @@ function updateCustomer(event) {
             if (data.trim() != 'unsuccessful'.trim()) {
                 toast('Cập nhật Username: ' + data + ' thành công!');
                 $('form').trigger('reset');
-                goToSection('viewCustomers.php');
+                goToSection('customer/viewCustomers.php');
             } else {
                 toast('Username đã tồn tại!', 'error');
             }
@@ -696,7 +586,7 @@ function updateCustomer(event) {
 
 function brandEditForm(id) {
     $.ajax({
-        url: "./adminView/editBrandForm.php",
+        url: "./adminView/brand/editBrandForm.php",
         method: "post",
         data: { record: id },
         success: function(data) {
@@ -714,14 +604,14 @@ function updateBrand(event) {
         return false;
     } else {
         $.ajax({
-            url: "./controller/updateBrandController.php",
+            url: "./controller/brand_controller/updateBrandController.php",
             method: "post",
             data: { record: id, brandname: brandname },
             success: function(data) {
                 if (data.trim() != 'unsuccessful') {
                     toast('Cập nhật thương hiệu thành ' + data + ' thành công!');
                     $('form').trigger('reset');
-                    showBrands();
+                    goToSection('brand/viewBrands.php');
                 } else {
                     toast('Thương hiệu đã tồn tại!', 'error');
                 }
@@ -732,7 +622,7 @@ function updateBrand(event) {
 
 function categoryEditForm(id) {
     $.ajax({
-        url: "./adminView/editCategoryForm.php",
+        url: "./adminView/category/editCategoryForm.php",
         method: "post",
         data: { record: id },
         success: function(data) {
@@ -763,7 +653,7 @@ function updateCategory(event) {
         }
 
         $.ajax({
-            url: "./controller/updateCategoryController.php",
+            url: "./controller/category_controller/updateCategoryController.php",
             method: "post",
             data: fd,
             processData: false,
@@ -772,7 +662,7 @@ function updateCategory(event) {
                 if (data.trim() != 'unsuccessful') {
                     toast('Cập nhật danh mục thành ' + data + ' thành công!');
                     $('form').trigger('reset');
-                    showCategories();
+                    goToSection('category/viewCategories.php')
                 } else if (data.trim() == 'bigsize') {
                     toast('Kích thước của ảnh không được vượt quá 2MB!', 'error', '6000');
                 } else if (data.trim() == 'notsuitable') {
@@ -787,7 +677,7 @@ function updateCategory(event) {
 
 function sizeEditForm(id) {
     $.ajax({
-        url: "./adminView/editSizeForm.php",
+        url: "./adminView/size/editSizeForm.php",
         method: "post",
         data: { record: id },
         success: function(data) {
@@ -805,14 +695,14 @@ function updateSize(event) {
         return false;
     } else {
         $.ajax({
-            url: "./controller/updateSizeController.php",
+            url: "./controller/size_controller/updateSizeController.php",
             method: "post",
             data: { record: id, sizename: sizename },
             success: function(data) {
                 if (data.trim() != 'unsuccessful') {
                     toast('Cập nhật kích cỡ thành ' + data + ' thành công!');
                     $('form').trigger('reset');
-                    showSizes();
+                    goToSection('size/viewSizes.php');
                 } else {
                     toast('Kích cỡ đã tồn tại!', 'error');
                 }
@@ -823,7 +713,7 @@ function updateSize(event) {
 
 function productEditForm(id) {
     $.ajax({
-        url: "./adminView/editProductForm.php",
+        url: "./adminView/product/editProductForm.php",
         method: "post",
         data: { record: id },
         success: function(data) {
@@ -880,7 +770,7 @@ function updateProduct(event) {
     fd.append('upload', upload);
 
     $.ajax({
-        url: "./controller/updateProductController.php",
+        url: "./controller/product_controller/updateProductController.php",
         method: "post",
         data: fd,
         processData: false,
@@ -895,7 +785,7 @@ function updateProduct(event) {
             } else {
                 toast('Cập nhật sản phẩm: ' + data + ' thành công!');
                 $('form').trigger('reset');
-                showProducts();
+                goToSection('product/viewProducts.php');
             }
         }
     });
@@ -903,7 +793,7 @@ function updateProduct(event) {
 
 function pdSizeEditForm(id) {
     $.ajax({
-        url: "./adminView/editPdSizeForm.php",
+        url: "./adminView/product_size/editPdSizeForm.php",
         method: "post",
         data: { record: id },
         success: function(data) {
@@ -925,14 +815,14 @@ function updatePdSize(event) {
 
     } else {
         $.ajax({
-            url: "./controller/updatePdSizeController.php",
+            url: "./controller/product_size_controller/updatePdSizeController.php",
             method: "post",
             data: { record: id, pdname: pdname, sizename: sizename, quantity: quantity },
             success: function(data) {
                 if (data.trim() != 'unsuccessful') {
                     toast('Cập nhật thông tin sản phẩm thành công!');
                     $('form').trigger('reset');
-                    showProductSizes();
+                    goToSection('product_size/viewProductSizes.php');
                 } else {
                     toast('Thông tin sản phẩm đã tồn tại!', 'error');
                 }
@@ -946,7 +836,7 @@ function searchProduct() {
     var productName = $('#s-productName').val();
     if (productName != '') {
         $.ajax({
-            url: './controller/searchProductController.php',
+            url: './controller/product_controller/searchProductController.php',
             method: 'POST',
             data: { productName: productName },
             success: function(data) {
@@ -954,7 +844,7 @@ function searchProduct() {
             }
         });
     } else {
-        showProducts();
+        goToSection('product/viewProducts.php');
     }
 }
 

@@ -24,6 +24,10 @@
 
 /*********** admin dashboard styling **********/
 
+.dashboard_content {
+    cursor: pointer;
+}
+
 .card {
     background-color: #71b2f2;
     padding: 20px;

@@ -1,3 +1,21 @@
+<?php
+    include_once './classes/cls_order.php';
+
+    $od = new order();
+?>
+
+<?php
+	if(isset($_GET['success']) && $_GET['success']!=NULL){
+
+    }
+    else {
+        echo "<script>
+                alert('Bạn không thể vào trang này bây giờ!')
+                window.location='index.php'
+            </script>";
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +32,19 @@
             <h1>Cảm ơn bạn đã mua hàng của chúng tôi!</h1>
             <p>Đơn hàng của bạn sẽ được chúng tôi xác nhận và giao đến cho bạn trong 4 - 5 ngày tới</p>
             <p>Mọi sự thắc mắc vui lòng liên hệ đến nhân viên của chúng tôi: 0359 255 852 (nv.Staff).</p>
-            <a href="index.php">Quay lại trang chủ</a>
+            <a href="index.php" class="mr-5">Quay lại trang chủ</a>
+
+            <?php
+                $show_order = $od->show_order_current();
+                if($show_order) {
+                    $result = $show_order->fetch_assoc();
+            ?>
+
+            <a target="_blank" href="./invoice.php?orderId=<?=$result['orderId']?>">Xem hóa đơn</a>
+
+            <?php
+                }
+            ?>
         </div>
     </section>
  

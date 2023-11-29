@@ -274,7 +274,7 @@ function toast(message, icon = 'success', timer = '2500', position = 'top-end') 
     });
 }
 
-// Validate
+// Validation functions
 
 function validateEmail(email) {
     // Regex pattern để kiểm tra định dạng email

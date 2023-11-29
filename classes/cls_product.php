@@ -57,7 +57,9 @@
             $query = "SELECT pd.*, ct.catName, br.brandName FROM tbl_product pd 
                       LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
                       LEFT JOIN tbl_brand br ON pd.brandId = br.brandId
-                      WHERE LOWER(pd.pdName) LIKE '%$pdname%'
+                      WHERE LOWER(pd.pdName) LIKE '%$pdname%' 
+                      OR LOWER(ct.catName) LIKE '%$pdname%' 
+                      OR LOWER(br.brandName) LIKE '%$pdname%'
                       ORDER BY pd.pdId DESC";
             $result = $this->db->select($query);
             return $result;

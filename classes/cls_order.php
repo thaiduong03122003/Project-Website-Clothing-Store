@@ -16,6 +16,12 @@
             $this->fm = new Format();
         }
 
+        public function show_order_current() {
+            $query ="SELECT * FROM tbl_order ORDER BY orderId DESC LIMIT 1";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
         public function show_orders() {
             $query ="SELECT * FROM tbl_order ORDER BY orderId DESC";
             $result = $this->db->select($query);
@@ -32,6 +38,14 @@
             $query ="SELECT od.*, cus.cusFirstname, cus.cusLastname FROM tbl_order od 
                     INNER JOIN tbl_customer cus ON od.cusId = cus.cusId
                     ORDER BY od.orderId DESC";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+        public function show_order_with_cus_info($id) {
+            $query ="SELECT od.*, cus.* FROM tbl_order od 
+                    INNER JOIN tbl_customer cus ON od.cusId = cus.cusId
+                    WHERE orderId = $id";
             $result = $this->db->select($query);
             return $result;
         }

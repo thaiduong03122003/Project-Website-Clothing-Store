@@ -13,7 +13,7 @@
     --second-color: hsl(34, 94%, 87%);
     --third-color: hsl(359, 100%, 50%);
     --title-color: hsl(0, 0%, 13%);
-    --text-color: hsl(154, 13%, 32%);
+    --text-color: hsl(150, 8%, 19%);
     --text-color-light: hsl(60, 1%, 56%);
     --body-color: hsl(0, 0%, 100%);
     --container-color: hsl(0, 0%, 93%);
@@ -1084,12 +1084,33 @@ cartside-section {
 /*=============== SHOP ===============*/
 
 .total__products {
+    float: left;
     margin-bottom: 2.5rem;
 }
 
 .total__products span {
     color: var(--first-color);
     font-weight: var(--weight-600);
+}
+
+.sort {
+    position: relative;
+    left: 50%;
+    margin-bottom: 1rem;
+}
+
+.sort::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.sort select {
+    font-size: var(--normal-font-size);
+    border: 1px solid var(--border-color-alt);
+    border-radius: 1.25rem;
+    padding: 0.125rem;
+    text-align: center;
 }
 
 .pagination {
@@ -1857,6 +1878,9 @@ cartside-section {
     .details__action {
         margin-bottom: 2.75rem;
     }
+    .sort {
+        left: 20%;
+    }
 }
 
 
@@ -1950,6 +1974,9 @@ cartside-section {
     .footer__social-links {
         justify-content: center;
     }
+    .sort {
+        left: 10%;
+    }
 }
 
 
@@ -2007,6 +2034,12 @@ cartside-section {
     .footer__bottom {
         flex-direction: column;
         align-items: center;
+    }
+    .total__products {
+        float: none;
+    }
+    .sort {
+        position: static;
     }
 }
 

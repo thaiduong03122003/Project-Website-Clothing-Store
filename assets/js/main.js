@@ -424,7 +424,7 @@ function applyCoupon(event) {
 
                     /*===== Cập nhật lại tổng giá tiền sau khi dùng mã giảm giá =====*/
                     let discount = parseInt(data);
-                    let newPrice = document.getElementById("cart-total");
+                    let newPrice = document.getElementById("cart-subtotal");
                     let cartTotalValue = newPrice.textContent.trim();
                     let total = changeToNumber(cartTotalValue);
                     let discountTotal = (total * discount / 100);
@@ -558,7 +558,7 @@ function confirmCheckOut(id) {
 
         } else {
 
-            var address = sub_address + ', ' + ward + ', ' + district + ', ' + province;
+            var address = sub_address + ', ' + ward.trim() + ', ' + district.trim() + ', ' + province.trim();
 
             var fd = new FormData();
             fd.append('firstname', firstname);
@@ -586,7 +586,7 @@ function confirmCheckOut(id) {
                         data = parseInt(data);
                         insertPdToODetails(data, function() {
                             localStorage.clear();
-                            window.location.href = '/thankyou.php';
+                            window.location.href = '/thankyou.php?success=true';
                         });
                     }
                 }
@@ -629,7 +629,7 @@ function confirmCheckOut(id) {
                         data = parseInt(data);
                         insertPdToODetails(data, function() {
                             localStorage.clear();
-                            window.location.href = '/thankyou.php';
+                            window.location.href = '/thankyou.php?success=true';
                         });
                     }
                 }
@@ -730,6 +730,8 @@ function searchItem() {
     var search = $("#search-input").val();
     window.location.href = '/search.php?name=' + search;
 }
+
+
 
 /*=============== SỬ DỤNG SWIPER CHO DANH MỤC SẢN PHẨM ===============*/
 var swiperCategories = new Swiper(".categories__container", {

@@ -107,7 +107,7 @@
                                         
                                     </td>
                                     <td><?=$result_or_list['orderTotalPrice']?></td>
-                                    <td><a href="" class="view__order">Xem đơn hàng</a></td>
+                                    <td><a target="_blank" href="./invoice.php?orderId=<?=$result_or_list['orderId']?>" class="view__order">Xem hóa đơn</a></td>
                                 </tr>
 
                             <?php

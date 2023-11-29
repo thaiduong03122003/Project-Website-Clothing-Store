@@ -5,7 +5,7 @@
     $db = new Database();
     $fm = new Format();
     $ps = new productsize();
-    $limit = 8;
+    $limit = 12;
     $page = 0;
     $output = '';
     if(isset($_POST["page"])) {
@@ -14,11 +14,26 @@
     } else {
         $page = 1;
     }
+
     $start_from = ($page - 1)*$limit;
-    
-    $query = "SELECT pd.*, ct.catName FROM tbl_product pd 
+
+    $sortOp = $_POST["sort"];
+    if ($sortOp == 'asc') {
+        $query = "SELECT pd.*, ct.catName FROM tbl_product pd 
                 LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
-                ORDER BY pd.pdId DESC LIMIT $start_from, $limit";
+                ORDER BY pd.pdPrice ASC LIMIT $start_from, $limit";
+
+    } else if ($sortOp == 'desc') {
+        $query = "SELECT pd.*, ct.catName FROM tbl_product pd 
+                LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
+                ORDER BY pd.pdPrice DESC LIMIT $start_from, $limit";
+
+    } else {
+        $query = "SELECT pd.*, ct.catName FROM tbl_product pd 
+                    LEFT JOIN tbl_category ct ON pd.catId = ct.catId 
+                    ORDER BY pd.pdId DESC LIMIT $start_from, $limit";
+    }
+
     $result = $db->select($query);
        
     if ($result) {
