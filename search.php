@@ -36,7 +36,7 @@
                 $pd = new product();
                 $sumpd = mysqli_num_rows($pd->show_products_by_name($name));
             ?>
-            <p class="total__products">Chúng tôi tìm thấy <span><?=$sumpd?></span> sản phẩm dựa trên từ khóa tìm kiếm của bạn!</p>
+            <p class="total__products" style="float: none;">Chúng tôi tìm thấy <span><?=$sumpd?></span> sản phẩm dựa trên từ khóa tìm kiếm của bạn!</p>
 
             <div class="products__container grid">
 

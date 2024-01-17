@@ -187,7 +187,7 @@
 
             <div class="details__tabs-content">
                 <div class="details__tab-content active-tab" content id="info">
-                    <table class="info__table">
+                    <table class="info__table">đa
                         <tr>
                             <th>Stand Up</th>
                             <td>35"L x 24"W x 37-45"H</td>
@@ -243,29 +243,43 @@
 
                 <div class="details__tab-content" content id="reviews">
                     <div class="reviews__container grid">
+                        <?php
+                            include_once "./classes/cls_comment.php";
+                            $cm = new comment;
+                            $cmlist = $cm->show_comemnt($id);
+                            if ($cmlist) {
+                                while ($result_cm = $cmlist->fetch_assoc()) {
+                                    $cusFullname = $result_cm['cusFirstname'].' '.$result_cm['cusLastname'];
+                        ?>
                         <div class="review__single">
                             <div>
                                 <img src="./assets/img/avatar-1.jpg" alt="" class="review__img">
-                                <h4 class="review__title">Jacky Chan</h4>
+                                <h4 class="review__title"><?=$cusFullname?></h4>
                             </div>
 
                             <div class="review__data">
                                 <div class="review__rating">
+                                    <?php
+                                        for ($i = 1; $i <= $result_cm['rate']; $i++) {
+                                    ?>
                                     <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
+                                    <?php
+                                        }
+                                    ?>
                                 </div>
 
                                 <p class="review__description">
-                                    Thank you very fast shipping from Poland only 3days.
+                                    <?=$result_cm['comment']?>
                                 </p>
 
-                                <span class="review__date">November 14, 2023 at 23:11</span>
+                                <span class="review__date"><?=$result_cm['date']?></span>
                             </div>
                         </div>
 
+                        <?php
+                                }
+                            }
+                        ?>
                         <div class="review__single">
                             <div>
                                 <img src="./assets/img/avatar-2.jpg" alt="" class="review__img">
