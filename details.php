@@ -182,12 +182,20 @@
                 <span class="detail__tab active-tab" data-target="#info">
                     Thông tin chi tiết
                 </span>
-                <span class="detail__tab" data-target="#reviews">Đánh giá(3)</span>
+
+                <?php
+                  include_once "./classes/cls_comment.php";
+                  $cm = new comment;
+                  $cmlist = $cm->show_comemnt($id);
+                  $num_reviews = ($cmlist) ? $cmlist->num_rows : 0;
+                ?>
+
+                <span class="detail__tab" data-target="#reviews">Đánh giá(<?=$num_reviews?>)</span>
             </div>
 
             <div class="details__tabs-content">
                 <div class="details__tab-content active-tab" content id="info">
-                    <table class="info__table">đa
+                    <table class="info__table">
                         <tr>
                             <th>Stand Up</th>
                             <td>35"L x 24"W x 37-45"H</td>
@@ -244,9 +252,6 @@
                 <div class="details__tab-content" content id="reviews">
                     <div class="reviews__container grid">
                         <?php
-                            include_once "./classes/cls_comment.php";
-                            $cm = new comment;
-                            $cmlist = $cm->show_comemnt($id);
                             if ($cmlist) {
                                 while ($result_cm = $cmlist->fetch_assoc()) {
                                     $cusFullname = $result_cm['cusFirstname'].' '.$result_cm['cusLastname'];
@@ -278,53 +283,15 @@
 
                         <?php
                                 }
+                            } else {
+                        ?>
+                        <div class="review__single" style="display: flex; justify-content: center;">
+                            <h5 style="opacity: 0.8">(Hiện tại chưa có đánh giá nào về sản phẩm này)</h5>
+                        </div>
+                        <?php
                             }
                         ?>
-                        <div class="review__single">
-                            <div>
-                                <img src="./assets/img/avatar-2.jpg" alt="" class="review__img">
-                                <h4 class="review__title">Jacky Chan</h4>
-                            </div>
 
-                            <div class="review__data">
-                                <div class="review__rating">
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                </div>
-
-                                <p class="review__description">
-                                    Great low price and works well.
-                                </p>
-
-                                <span class="review__date">November 14, 2023 at 23:11</span>
-                            </div>
-                        </div>
-
-                        <div class="review__single">
-                            <div>
-                                <img src="./assets/img/avatar-3.jpg" alt="" class="review__img">
-                                <h4 class="review__title">Jacky Chan</h4>
-                            </div>
-
-                            <div class="review__data">
-                                <div class="review__rating">
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                    <i class="fi fi-rs-star"></i>
-                                </div>
-
-                                <p class="review__description">
-                                    Thank you very much.
-                                </p>
-
-                                <span class="review__date">November 14, 2023 at 23:11</span>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="review__form">
@@ -339,16 +306,26 @@
                         </div>
 
                         <form action="" class="form grid">
-                            <textarea name="" class="form__input textarea" placeholder="Viết đánh giá của bạn"></textarea>
+                            <textarea name="" id="area_comment" class="form__input textarea" placeholder="Viết đánh giá của bạn"></textarea>
 
-                            <div class="form__group grid">
+                            <div class="form__group grid"
+                              <?php
+                                if (Session::get("customer_login")) {
+                                  $cusId = Session::get("customer_id");
+                                  
+                              ?>
+                                style="display: none;"
+                              <?php
+                                }
+                              ?>
+                            >
                                 <input type="text" name="" placeholder="Tên" class="form__input">
 
                                 <input type="email" name="" placeholder="Email" class="form__input">
                             </div>
 
                             <div class="form__btn">
-                                <button class="btn">Gửi</button>
+                                <input type="button" onclick="sendComment(event, '<?=$cusId?>', '<?=$id?>')" class="btn" value="Gửi">
                             </div>
                         </form>
                     </div>

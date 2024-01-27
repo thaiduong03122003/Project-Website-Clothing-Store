@@ -236,6 +236,33 @@ function updatePassword(id) {
     }
 }
 
+function sendComment(event, cusId, pdId) {
+  event.preventDefault();
+  let comment = $("#area_comment").val();
+  console.log(comment);
+  var fd = new FormData();
+  fd.append('cusId', cusId);
+  fd.append('pdId', pdId);
+  fd.append('comment', comment);
+  
+  $.ajax({
+      url: "./cus_controller/updateComment.php",
+      method: "post",
+      data: fd,
+      processData: false,
+      contentType: false,
+      success: function(data) {
+          if (data.trim() == 'successful') {
+              toast('Đánh giá sản phẩm thành công!');
+              $('.reviews__container').load(window.location.href + ' .reviews__container');
+          } else {
+              toast('Đánh giá sản phẩm thất bại!', 'error');
+              console.log(data);
+          }
+      }
+  });
+}
+
 // Hộp thông báo xác nhận
 function confirmObj(title, text, icon, confirmText, cancelText) {
     return {
