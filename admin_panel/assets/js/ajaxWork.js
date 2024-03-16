@@ -831,6 +831,10 @@ function updatePdSize(event) {
     }
 }
 
+function cmtViewMoreInfo(id) {
+  
+}
+
 // Tìm kiếm sản phẩm
 function searchProduct() {
     var productName = $('#s-productName').val();

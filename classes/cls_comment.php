@@ -25,6 +25,24 @@
             return $result;
         }
 
+        public function show_all_info_comment() {
+          $query ="SELECT r.*, pd.pdImg, pd.pdName, cus.cusFirstname, cus.cusLastname FROM tbl_rate r 
+          LEFT JOIN tbl_customer cus ON r.cusId = cus.cusId
+          LEFT JOIN tbl_product pd ON r.pdId = pd.pdId
+          ORDER BY r.cId DESC";
+            $result = $this->db->select($query);
+            return $result;
+        }
+
+        public function show_info_detail($id) {
+          $query ="SELECT r.*, cus.*, pd.* FROM tbl_rate r 
+            LEFT JOIN tbl_customer cus ON r.cusId = cus.cusId
+            LEFT JOIN tbl_product pd ON r.pdId = pd.pdId
+            WHERE r.cId = '$id'";
+            $result = $this->db->select($query);
+            return $result;
+        } 
+
         public function del_comment($id) {
             $query = "DELETE FROM tbl_rate WHERE cId = '$id'";
             $result = $this->db->delete($query);

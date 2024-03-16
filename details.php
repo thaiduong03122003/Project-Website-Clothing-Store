@@ -325,7 +325,17 @@
                             </div>
 
                             <div class="form__btn">
-                                <input type="button" onclick="sendComment(event, '<?=$cusId?>', '<?=$id?>')" class="btn" value="Gửi">
+                                <input type="button" <?php
+                                if (Session::get("customer_id") == null) {
+                                  ?>
+                                  onclick="sendComment(event, null, null)"
+                                <?php
+                                } else {
+                                  ?>
+                                  onclick="sendComment(event, '<?=$cusId?>', '<?=$id?>')"
+                                <?php
+                                }
+                                ?> class="btn" value="Gửi">
                             </div>
                         </form>
                     </div>
